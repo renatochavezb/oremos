@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Oremos - Perfil de la Comunidad e Impacto</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&amp;family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&amp;display=swap" rel="stylesheet"/>
+<!-- Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary-fixed-dim": "#a8caec",
+                    "background": "#fbf9f8",
+                    "surface-variant": "#e4e2e2",
+                    "outline": "#73777e",
+                    "on-tertiary": "#ffffff",
+                    "outline-variant": "#c2c7ce",
+                    "inverse-on-surface": "#f2f0f0",
+                    "on-primary-fixed-variant": "#264a66",
+                    "surface-container-low": "#f5f3f3",
+                    "on-primary": "#ffffff",
+                    "error-container": "#ffdad6",
+                    "secondary": "#6b5584",
+                    "error": "#ba1a1a",
+                    "surface-container-high": "#eae8e7",
+                    "surface-container-highest": "#e4e2e2",
+                    "tertiary": "#5c5c58",
+                    "surface-bright": "#fbf9f8",
+                    "primary-container": "#567896",
+                    "primary": "#3d5f7c",
+                    "on-background": "#1b1c1c",
+                    "secondary-fixed-dim": "#d7bcf2",
+                    "on-secondary-container": "#67507f",
+                    "tertiary-fixed-dim": "#c8c6c2",
+                    "secondary-container": "#e3c7fe",
+                    "on-secondary-fixed": "#26113c",
+                    "inverse-primary": "#a8caec",
+                    "tertiary-container": "#757571",
+                    "on-surface": "#1b1c1c",
+                    "secondary-fixed": "#efdbff",
+                    "on-primary-fixed": "#001d31",
+                    "on-tertiary-container": "#fefcf7",
+                    "tertiary-fixed": "#e4e2dd",
+                    "surface-container-lowest": "#ffffff",
+                    "on-error": "#ffffff",
+                    "surface": "#fbf9f8",
+                    "primary-fixed": "#cce5ff",
+                    "on-surface-variant": "#42474d",
+                    "on-error-container": "#93000a",
+                    "surface-tint": "#3f627f",
+                    "on-secondary": "#ffffff",
+                    "on-tertiary-fixed-variant": "#474744",
+                    "on-tertiary-fixed": "#1b1c19",
+                    "on-secondary-fixed-variant": "#533d6b",
+                    "on-primary-container": "#fdfcff",
+                    "surface-container": "#efeded",
+                    "inverse-surface": "#303030",
+                    "surface-dim": "#dbd9d9"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "margin-mobile": "20px",
+                    "unit": "8px",
+                    "margin-desktop": "64px",
+                    "gutter": "24px",
+                    "container-max-width": "1200px"
+            },
+            "fontFamily": {
+                    "headline-lg-mobile": ["EB Garamond"],
+                    "label-sm": ["Plus Jakarta Sans"],
+                    "display-lg": ["EB Garamond"],
+                    "body-md": ["Plus Jakarta Sans"],
+                    "headline-md": ["EB Garamond"],
+                    "label-md": ["Plus Jakarta Sans"],
+                    "body-lg": ["Plus Jakarta Sans"],
+                    "headline-lg": ["EB Garamond"]
+            },
+            "fontSize": {
+                    "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "500"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.03em", "fontWeight": "500"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "500"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "500"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "500"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #fbf9f8;
+            color: #1b1c1c;
+            -webkit-font-smoothing: antialiased;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .prayer-glow:hover {
+            box-shadow: 0 8px 30px rgba(0,0,0,0.04);
+        }
+        .amen-pulse:active {
+            animation: pulse-ring 1.25s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+        }
+        @keyframes pulse-ring {
+            0% { transform: scale(.95); opacity: 0.8; }
+            50% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(.95); opacity: 0.8; }
+        }
+    </style>
+</head>
+<body class="font-body-md text-on-surface bg-background">
+<!-- Header -->
+<header class="sticky top-0 z-[60] bg-surface/80 backdrop-blur-md border-b border-outline-variant/30">
+<div class="max-w-container-max-width mx-auto px-margin-mobile md:px-margin-desktop h-20 flex items-center justify-between">
+<div class="flex items-center gap-12">
+<a class="font-display-lg text-primary text-2xl tracking-tight" href="#">Oremos</a>
+<nav class="hidden md:flex items-center gap-8"><a class="font-label-md text-on-surface-variant hover:text-primary transition-colors" href="#">Inicio</a><a class="font-label-md text-on-surface-variant hover:text-primary transition-colors" href="#">Muro de Oración</a><a class="font-label-md text-on-surface-variant hover:text-primary transition-colors" href="#">Nueva Petición</a><a class="font-label-md text-primary font-bold border-b-2 border-primary py-1" href="#">Comunidad</a><a class="font-label-md text-on-surface-variant hover:text-primary transition-colors" href="#">Apoyo</a></nav>
+</div>
+<div class="flex items-center gap-6">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors">favorite</button>
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors">notifications</button>
+<div class="w-10 h-10 rounded-full overflow-hidden border-2 border-white shadow-sm cursor-pointer">
+<img alt="Perfil" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBWLzM5wIIxXWbrwOUILZhmSm8lBy6NDtb9B-mCY2akEFdEOcuVYI_MldnCzTypn4RmeeRf02vVXZlAWGXPM7_JZNYyLXCnyt0_Fhp11WQuYoRYjpDDPxGQDpsvqalwl3_7LGpJw4L7eo82w25VFh06-uxHM7Ts33bWVDLa4MTMqhXiNz9VnuPdqbXr3iFjQdwlnoK4ayPJdRHzxDaedcCVI2uanplqbRX4XbtwcZZxg11n4v5P44itc_3fPmpF732tk0H4f6t1Fu0"/>
+</div>
+</div>
+</div>
+</header>
+<main class="max-w-container-max-width mx-auto px-margin-mobile md:px-margin-desktop py-12 md:py-20">
+<!-- Hero Branding Section -->
+<section class="mb-16 text-center">
+<h2 class="font-display-lg text-display-lg text-primary mb-4 italic">El Poder de la Paz Colectiva</h2>
+<p class="text-on-surface-variant max-w-2xl mx-auto font-body-lg text-body-lg">Bienvenido a tu santuario. Tus oraciones contribuyen a un movimiento global de calma y compasión.</p>
+</section>
+<!-- Impact Metrics Grid -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter mb-20">
+<div class="md:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-gutter">
+<!-- Metric 1 -->
+<div class="bg-surface-container-lowest rounded-xl p-8 flex flex-col justify-between min-h-[200px] border border-outline-variant/30 hover:shadow-md transition-all">
+<div class="flex justify-between items-start">
+<div class="w-10 h-10 rounded-full bg-primary/5 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">public</span>
+</div>
+<span class="bg-primary/10 text-primary text-[10px] px-3 py-1 rounded-full font-bold uppercase tracking-wider">En Vivo</span>
+</div>
+<div>
+<p class="font-label-md text-on-surface-variant mb-1">Oraciones globales hoy</p>
+<h3 class="font-headline-lg text-primary">12,842</h3>
+</div>
+</div>
+<!-- Metric 2 -->
+<div class="bg-surface-container-lowest rounded-xl p-8 flex flex-col justify-between min-h-[200px] border border-outline-variant/30 hover:shadow-md transition-all">
+<div class="w-10 h-10 rounded-full bg-secondary/5 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined">volunteer_activism</span>
+</div>
+<div>
+<p class="font-label-md text-on-surface-variant mb-1">Vidas tocadas</p>
+<h3 class="font-headline-lg text-secondary">84,103</h3>
+</div>
+</div>
+</div>
+<!-- Personal Streak -->
+<div class="md:col-span-4 bg-[#3d5f7c] text-white rounded-xl p-8 flex flex-col justify-center items-center text-center relative overflow-hidden">
+<div class="absolute inset-0 opacity-10">
+<img alt="Texture" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCOG8Evf1LEGuCqYMT_3I7Slb90t00qA8jH5brqLIuvxFZu6Bapyg3AQsdoMtm_M_GxohosqqKJ1EIqzuiOw8FwKThEHNY8Ia-_5x-Q43s52f8fZr_k4LhuTdu1Lhu0GS4IoAS0U-Uz_z-Da8l_dwhvB6Gad1YU9IE2npoxGDpwFLDgBdZe1ipQblb2g9CX1otfGvzh0xGlEFbFbF7Um1Y00HnGir5M-B4cp0GfSILygdb5wQWN4F1Mj0cTMG05nCcLfZ3EZ8ytrQ0"/>
+</div>
+<div class="relative z-10 w-full">
+<p class="font-label-sm uppercase tracking-widest opacity-80 mb-2">Racha de Oración</p>
+<div class="font-display-lg text-5xl mb-4">12</div>
+<p class="font-label-sm uppercase tracking-widest opacity-80">Días de atención plena</p>
+<div class="w-full h-1 bg-white/20 rounded-full mt-8 overflow-hidden">
+<div class="h-full bg-white w-3/4 rounded-full"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Personal Activity Tabs -->
+<section class="mb-20">
+<div class="flex flex-wrap items-baseline gap-8 mb-8 border-b border-outline-variant/30">
+<button class="font-headline-md text-primary pb-4 border-b-2 border-primary transition-all">Oraciones a las que te has unido</button>
+<button class="font-headline-md text-on-surface-variant pb-4 hover:text-primary transition-all">Tus cadenas activas</button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-gutter">
+<!-- Prayer Card 1 -->
+<div class="bg-surface-container-lowest rounded-xl p-8 border border-outline-variant/30 hover:border-secondary/30 transition-all shadow-sm">
+<div class="flex justify-between items-start mb-6">
+<div class="flex items-center gap-3">
+<div class="w-2 h-2 rounded-full bg-secondary"></div>
+<span class="font-label-md text-secondary">Sanación</span>
+</div>
+<span class="font-label-sm text-on-surface-variant italic">Iniciado hace 2 días</span>
+</div>
+<p class="font-headline-md text-on-surface leading-relaxed mb-6 italic">
+                        "Por la recuperación de Sarah tras su cirugía. Que sienta fortaleza y consuelo durante su camino de sanación."
+                    </p>
+<div class="flex justify-between items-center pt-6 border-t border-outline-variant/20">
+<span class="font-label-md text-on-surface-variant">por Eleanor R.</span>
+<button class="amen-pulse flex items-center gap-2 bg-secondary/5 text-secondary px-6 py-2.5 rounded-full font-label-md hover:bg-secondary hover:text-white transition-all">
+<span class="material-symbols-outlined text-[18px]">favorite</span>
+                            Amén
+                        </button>
+</div>
+</div>
+<!-- Prayer Card 2 -->
+<div class="bg-surface-container-lowest rounded-xl p-8 border border-outline-variant/30 hover:border-primary/30 transition-all shadow-sm">
+<div class="flex justify-between items-start mb-6">
+<div class="flex items-center gap-3">
+<div class="w-2 h-2 rounded-full bg-primary"></div>
+<span class="font-label-md text-primary">Gratitud</span>
+</div>
+<span class="font-label-sm text-on-surface-variant italic">Iniciado hace 5h</span>
+</div>
+<p class="font-headline-md text-on-surface leading-relaxed mb-6 italic">
+                        "Dando gracias por la amabilidad inesperada de un extraño hoy. Me recordó la luz que hay en cada persona."
+                    </p>
+<div class="flex justify-between items-center pt-6 border-t border-outline-variant/20">
+<span class="font-label-md text-on-surface-variant">por Thomas K.</span>
+<button class="amen-pulse flex items-center gap-2 bg-primary/5 text-primary px-6 py-2.5 rounded-full font-label-md hover:bg-primary hover:text-white transition-all">
+<span class="material-symbols-outlined text-[18px]">favorite</span>
+                            Amén
+                        </button>
+</div>
+</div>
+</div>
+</section>
+<!-- Faith Communities Section -->
+<section class="py-16 bg-surface-container rounded-3xl px-8 md:px-16 relative overflow-hidden">
+<div class="relative z-10">
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-8">
+<div class="max-w-xl">
+<h2 class="font-headline-lg text-primary mb-4">Comunidades de Fe</h2>
+<p class="text-on-surface-variant font-body-md">Únete a un grupo que resuene con tu camino. Las caminatas espirituales compartidas crean vínculos más profundos y paz duradera.</p>
+</div>
+<button class="px-10 py-3.5 bg-primary text-white rounded-full font-label-md shadow-lg shadow-primary/10 hover:translate-y-[-2px] transition-all">
+                        Explorar Todos los Grupos
+                    </button>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+<!-- Community 1 -->
+<div class="bg-surface-container-lowest rounded-2xl p-8 border border-outline-variant/20 hover:shadow-lg transition-all group">
+<div class="w-12 h-12 bg-secondary/5 rounded-xl flex items-center justify-center text-secondary mb-6 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined">auto_awesome</span>
+</div>
+<h4 class="font-headline-md text-on-surface mb-3">Quietud Matinal</h4>
+<p class="text-on-surface-variant font-label-sm mb-8 leading-relaxed">Un grupo dedicado a la meditación al amanecer y a la gratitud matutina.</p>
+<div class="flex justify-between items-center pt-6 border-t border-outline-variant/10">
+<span class="text-xs font-label-sm text-on-surface-variant">1,240 Miembros</span>
+<button class="text-secondary font-label-md hover:underline">Unirse al Grupo</button>
+</div>
+</div>
+<!-- Community 2 -->
+<div class="bg-surface-container-lowest rounded-2xl p-8 border border-outline-variant/20 hover:shadow-lg transition-all group">
+<div class="w-12 h-12 bg-primary/5 rounded-xl flex items-center justify-center text-primary mb-6 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined">health_and_safety</span>
+</div>
+<h4 class="font-headline-md text-on-surface mb-3">Manos que Sanan</h4>
+<p class="text-on-surface-variant font-label-sm mb-8 leading-relaxed">Enfocando nuestra energía colectiva en aquellos que se recuperan de una enfermedad o pérdida.</p>
+<div class="flex justify-between items-center pt-6 border-t border-outline-variant/10">
+<span class="text-xs font-label-sm text-on-surface-variant">856 Miembros</span>
+<button class="text-primary font-label-md hover:underline">Unirse al Grupo</button>
+</div>
+</div>
+<!-- Community 3 -->
+<div class="bg-surface-container-lowest rounded-2xl p-8 border border-outline-variant/20 hover:shadow-lg transition-all group">
+<div class="w-12 h-12 bg-tertiary-container/5 rounded-xl flex items-center justify-center text-tertiary mb-6 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined">diversity_3</span>
+</div>
+<h4 class="font-headline-md text-on-surface mb-3">Jóvenes Fieles</h4>
+<p class="text-on-surface-variant font-label-sm mb-8 leading-relaxed">Navegando la vida moderna con arraigo espiritual y sabiduría colectiva.</p>
+<div class="flex justify-between items-center pt-6 border-t border-outline-variant/10">
+<span class="text-xs font-label-sm text-on-surface-variant">2,102 Miembros</span>
+<button class="text-secondary font-label-md hover:underline">Unirse al Grupo</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Background Decoration -->
+<div class="absolute top-0 right-0 w-80 h-80 bg-primary/5 rounded-full blur-3xl -mr-40 -mt-40"></div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container py-16 border-t border-outline-variant/30">
+<div class="max-w-container-max-width mx-auto px-margin-mobile md:px-margin-desktop">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+<div class="col-span-1 md:col-span-1">
+<h2 class="font-display-lg text-primary text-2xl mb-6 tracking-tight">Oremos</h2>
+<p class="text-on-surface-variant font-body-md leading-relaxed">Cimentando el mundo en paz colectiva y atención plena a través del poder de la oración compartida.</p>
+</div>
+<div>
+<h4 class="font-label-md text-on-surface uppercase tracking-widest mb-6">Explorar</h4>
+<ul class="space-y-4"><li><a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Muro de Oración</a></li><li><a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Nueva Petición</a></li><li><a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Grupos de Fe</a></li><li><a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Meditaciones</a></li><li><a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Apoyo</a></li></ul>
+</div>
+<div>
+<h4 class="font-label-md text-on-surface uppercase tracking-widest mb-6">Comunidad</h4>
+<ul class="space-y-4">
+<li><a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Historias de Impacto</a></li>
+<li><a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Directrices</a></li>
+<li><a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Eventos</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-label-md text-on-surface uppercase tracking-widest mb-6">Síguenos</h4>
+<div class="flex gap-4">
+<a class="w-10 h-10 rounded-full border border-outline-variant flex items-center justify-center text-on-surface-variant hover:bg-primary hover:text-white hover:border-primary transition-all" href="#"><span class="material-symbols-outlined text-sm">share</span></a>
+<a class="w-10 h-10 rounded-full border border-outline-variant flex items-center justify-center text-on-surface-variant hover:bg-primary hover:text-white hover:border-primary transition-all" href="#"><span class="material-symbols-outlined text-sm">public</span></a>
+</div>
+</div>
+</div>
+<div class="pt-8 border-t border-outline-variant/30 flex flex-col md:flex-row justify-between items-center gap-4">
+<p class="text-on-surface-variant text-sm">© 2024 Oremos. Todos los derechos reservados.</p>
+<div class="flex gap-8">
+<a class="text-on-surface-variant text-sm hover:text-primary" href="#">Privacidad</a>
+<a class="text-on-surface-variant text-sm hover:text-primary" href="#">Términos</a>
+</div>
+</div>
+</div>
+</footer>
+<!-- Mobile Navigation -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full bg-surface/90 backdrop-blur-lg border-t border-outline-variant/30 px-6 py-4 flex justify-between items-center z-[70]">
+<button class="flex flex-col items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined">home</span>
+<span class="text-[10px] font-label-md">Inicio</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined">favorite</span>
+<span class="text-[10px] font-label-md">Muro</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-primary">
+<span class="material-symbols-outlined">group</span>
+<span class="text-[10px] font-label-md font-bold">Comunidad</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined">person</span>
+<span class="text-[10px] font-label-md">Perfil</span>
+</button>
+</nav>
+<script>
+        // Amen button interaction
+        document.querySelectorAll('.amen-pulse').forEach(button => {
+            button.addEventListener('click', function() {
+                const icon = this.querySelector('.material-symbols-outlined');
+                const isFilled = icon.style.fontVariationSettings.includes("'FILL' 1");
+                
+                if (!isFilled) {
+                    icon.style.fontVariationSettings = "'FILL' 1";
+                    this.classList.add('bg-secondary', 'text-white');
+                    this.classList.remove('bg-secondary/5');
+                } else {
+                    icon.style.fontVariationSettings = "'FILL' 0";
+                    this.classList.remove('bg-secondary', 'text-white');
+                    this.classList.add('bg-secondary/5');
+                }
+            });
+        });
+
+        // Simple observer for reveal animation
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('opacity-100', 'translate-y-0');
+                    entry.target.classList.remove('opacity-0', 'translate-y-4');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('section, .bg-surface-container-lowest').forEach(el => {
+            el.classList.add('transition-all', 'duration-700', 'opacity-0', 'translate-y-4');
+            observer.observe(el);
+        });
+    </script>
+</body></html>

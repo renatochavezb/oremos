@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Oremos - Muro de Oración</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-surface": "#1b1c1c",
+                    "primary-fixed-dim": "#a8caec",
+                    "on-secondary-fixed-variant": "#533d6b",
+                    "inverse-primary": "#a8caec",
+                    "tertiary-fixed-dim": "#c8c6c2",
+                    "on-tertiary-container": "#fefcf7",
+                    "secondary": "#6b5584",
+                    "surface-container-low": "#f5f3f3",
+                    "surface-container": "#efeded",
+                    "on-tertiary-fixed-variant": "#474744",
+                    "surface-bright": "#fbf9f8",
+                    "inverse-on-surface": "#f2f0f0",
+                    "on-primary-fixed-variant": "#264a66",
+                    "secondary-container": "#e3c7fe",
+                    "on-primary-container": "#fdfcff",
+                    "on-secondary": "#ffffff",
+                    "on-primary-fixed": "#001d31",
+                    "surface": "#fbf9f8",
+                    "tertiary-fixed": "#e4e2dd",
+                    "outline-variant": "#c2c7ce",
+                    "on-tertiary": "#ffffff",
+                    "outline": "#73777e",
+                    "primary": "#3d5f7c",
+                    "on-background": "#1b1c1c",
+                    "background": "#fbf9f8",
+                    "tertiary": "#5c5c58",
+                    "surface-dim": "#dbd9d9",
+                    "surface-container-highest": "#e4e2e2",
+                    "error": "#ba1a1a",
+                    "on-error": "#ffffff",
+                    "error-container": "#ffdad6",
+                    "primary-fixed": "#cce5ff",
+                    "secondary-fixed-dim": "#d7bcf2",
+                    "on-tertiary-fixed": "#1b1c19",
+                    "tertiary-container": "#757571",
+                    "secondary-fixed": "#efdbff",
+                    "on-primary": "#ffffff",
+                    "on-surface-variant": "#42474d",
+                    "surface-variant": "#e4e2e2",
+                    "surface-tint": "#3f627f",
+                    "surface-container-high": "#eae8e7",
+                    "inverse-surface": "#303030",
+                    "on-error-container": "#93000a",
+                    "on-secondary-container": "#67507f",
+                    "surface-container-lowest": "#ffffff",
+                    "primary-container": "#567896",
+                    "on-secondary-fixed": "#26113c"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "margin-desktop": "64px",
+                    "container-max-width": "1200px",
+                    "unit": "8px",
+                    "gutter": "24px",
+                    "margin-mobile": "20px"
+            },
+            "fontFamily": {
+                    "headline-lg": ["EB Garamond"],
+                    "body-md": ["Plus Jakarta Sans"],
+                    "headline-md": ["EB Garamond"],
+                    "display-lg": ["EB Garamond"],
+                    "label-sm": ["Plus Jakarta Sans"],
+                    "headline-lg-mobile": ["EB Garamond"],
+                    "label-md": ["Plus Jakarta Sans"],
+                    "body-lg": ["Plus Jakarta Sans"]
+            },
+            "fontSize": {
+                    "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "500"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "500"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "500"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.03em", "fontWeight": "500"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "500"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .amen-pulse {
+            animation: pulse-glow 2s infinite;
+        }
+        @keyframes pulse-glow {
+            0% { box-shadow: 0 0 0 0 rgba(107, 85, 132, 0.2); }
+            70% { box-shadow: 0 0 0 15px rgba(107, 85, 132, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(107, 85, 132, 0); }
+        }
+        .candle-flicker {
+            animation: flicker 1.5s infinite alternate;
+        }
+        @keyframes flicker {
+            0% { opacity: 0.8; transform: scale(1); }
+            100% { opacity: 1; transform: scale(1.1); }
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md selection:bg-secondary-container">
+<!-- TopAppBar -->
+<header class="bg-surface/70 backdrop-blur-md sticky top-0 z-[60] border-b border-outline-variant/30 w-full">
+<div class="max-w-container-max-width mx-auto px-margin-mobile md:px-margin-desktop py-4 flex justify-between items-center">
+<div class="flex items-center gap-12">
+<h1 class="font-headline-md text-headline-md text-primary tracking-tight">Oremos</h1>
+<!-- Desktop Nav Items -->
+<nav class="hidden md:flex items-center gap-8"><a class="text-on-surface-variant hover:text-primary transition-colors duration-300 font-label-md text-label-md" href="#">Inicio</a>
+<a class="text-primary font-bold transition-colors duration-300 font-label-md text-label-md" href="#">Muro de Oración</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors duration-300 font-label-md text-label-md" href="#">Nueva Petición</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors duration-300 font-label-md text-label-md" href="#">Comunidad</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors duration-300 font-label-md text-label-md" href="#">Apoyo</a></nav>
+</div>
+<div class="flex items-center gap-4">
+<a class="hidden sm:flex items-center gap-1.5 px-4 py-2 text-secondary border border-secondary/30 rounded-full hover:bg-secondary/5 transition-colors font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined text-[18px]">volunteer_activism</span>
+                    Donar
+                </a>
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary transition-colors">notifications</span>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant">
+<img alt="Perfil de usuario" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAl1y2l--D09rAjy63_2PG-zi4BsHRirHWb3fVRdNdtQwzqbeqfee7aGDvcCxdryrsWvqemI1qdgiyz-jPVwnoXLMlrbOf0_f717o9ZJIYkJc6EtjRN_NLYjCVfcW-Q5PhaqGXa8bKl0l27fdELZuGrxqMJA1kHDnPm9Fdylav0z4K6X6fLO7cMz3HjDIMc4B6DghDSu70yPbapGiJh5o6uixT6DxBBq7tJrVXwQf_SgLrZu6KElBDHw4V6ixjjz70v8soCKW6vSBQ"/>
+</div>
+</div>
+</div>
+</header>
+<main class="max-w-container-max-width mx-auto px-margin-mobile md:px-margin-desktop pt-12 pb-32">
+<!-- Hero / Intro Section -->
+<section class="mb-12 text-center max-w-2xl mx-auto">
+<h2 class="font-display-lg text-display-lg text-primary mb-4">Muro de Oración</h2>
+<p class="font-body-lg text-body-lg text-tertiary leading-relaxed">
+                Únete a nuestra comunidad en un momento de quietud. Carguen con las cargas de los demás a través del poder de la oración colectiva.
+            </p>
+</section>
+<!-- Premium CTA Banner (Nudge) -->
+<section class="mb-12">
+<div class="bg-surface-container/50 border border-outline-variant/30 rounded-2xl p-6 flex flex-col md:flex-row items-center justify-between gap-6">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-surface-variant flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined">lock</span>
+</div>
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface">Peticiones Privadas</h3>
+<p class="font-body-md text-body-md text-tertiary">Comparte tu carga solo con nuestro equipo de intercesores dedicados.</p>
+</div>
+</div>
+<button class="whitespace-nowrap px-6 py-3 bg-secondary text-on-secondary rounded-full font-label-md text-label-md hover:shadow-lg transition-all flex items-center gap-2">
+                    Solicitar Oración Privada
+                    <span class="material-symbols-outlined text-[18px]">verified</span>
+</button>
+</div>
+</section>
+<!-- Category Filters -->
+<section class="mb-12 overflow-x-auto pb-4">
+<div class="flex items-center gap-3 justify-start md:justify-center min-w-max">
+<button class="px-6 py-2 rounded-full bg-primary text-on-primary font-label-md text-label-md transition-all shadow-sm">Todas las Peticiones</button>
+<button class="px-6 py-2 rounded-full bg-secondary-fixed text-on-secondary-fixed font-label-md text-label-md hover:bg-secondary-fixed-dim transition-all">Salud</button>
+<button class="px-6 py-2 rounded-full bg-secondary-fixed text-on-secondary-fixed font-label-md text-label-md hover:bg-secondary-fixed-dim transition-all">Paz</button>
+<button class="px-6 py-2 rounded-full bg-secondary-fixed text-on-secondary-fixed font-label-md text-label-md hover:bg-secondary-fixed-dim transition-all">Gratitud</button>
+<button class="px-6 py-2 rounded-full bg-secondary-fixed text-on-secondary-fixed font-label-md text-label-md hover:bg-secondary-fixed-dim transition-all">Familia</button>
+</div>
+</section>
+<!-- Prayer Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter">
+<!-- Prayer Card 1 -->
+<div class="bg-surface-container-lowest rounded-xl p-8 shadow-sm border border-outline-variant/30 flex flex-col justify-between group hover:shadow-md transition-all duration-300 ring-2 ring-amber-200/50 bg-gradient-to-b from-surface-container-lowest to-amber-50/30">
+<div>
+<div class="flex justify-between items-start mb-6"><span class="flex items-center gap-1 px-2 py-0.5 bg-amber-100 text-amber-800 font-label-sm text-[10px] rounded uppercase font-bold"><span class="material-symbols-outlined text-[12px] text-amber-500" style="font-variation-settings: 'FILL' 1;">local_fire_department</span>12 velas encendidas</span>
+<span class="px-3 py-1 bg-secondary-fixed text-on-secondary-fixed-variant rounded-full font-label-sm text-label-sm">Salud</span>
+<span class="text-outline font-label-sm text-label-sm">24 oct. 2023</span>
+</div>
+<p class="font-headline-md text-headline-md text-on-surface mb-4">Elena</p>
+<p class="font-body-md text-body-md text-tertiary italic mb-8 leading-relaxed">
+                        "Pido fortaleza al comenzar mi camino de recuperación. Que la paz encuentre su lugar en mi corazón durante estas mañanas tranquilas de sanación."
+                    </p>
+</div>
+<div class="space-y-4">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary scale-90" style="font-variation-settings: 'FILL' 1;">favorite</span>
+<span class="font-label-md text-label-md text-on-surface-variant">128 orando</span>
+</div>
+<button class="flex items-center gap-1.5 px-3 py-1.5 bg-amber-50 border border-amber-200/50 rounded-full font-label-sm text-[11px] uppercase tracking-wider text-amber-800" disabled=""><span class="material-symbols-outlined text-[16px] text-amber-500 candle-flicker" style="font-variation-settings: 'FILL' 1;">mode_fan</span>Vela encendida</button>
+</div>
+<button class="amen-btn w-full group relative flex items-center justify-center gap-2 px-5 py-2.5 bg-primary text-on-primary rounded-full font-label-md text-label-md hover:bg-primary-container transition-all active:scale-95" onclick="handleAmen(this)">
+<span class="material-symbols-outlined text-[18px]">rebase_edit</span>
+                        Orar por esto
+                    </button>
+<div class="flex justify-center pt-2"><button class="text-label-sm text-secondary hover:text-primary transition-colors font-medium">Dar las gracias</button></div></div>
+</div>
+<!-- Prayer Card 2 -->
+<div class="bg-surface-container-lowest rounded-xl p-8 shadow-sm border border-outline-variant/30 flex flex-col justify-between group hover:shadow-md transition-all duration-300 ring-2 ring-amber-200/50 bg-gradient-to-b from-surface-container-lowest to-amber-50/30">
+<div>
+<div class="flex justify-between items-start mb-6"><span class="flex items-center gap-1 px-2 py-0.5 bg-amber-100 text-amber-800 font-label-sm text-[10px] rounded uppercase font-bold"><span class="material-symbols-outlined text-[12px] text-amber-500" style="font-variation-settings: 'FILL' 1;">local_fire_department</span>8 velas encendidas</span>
+<span class="px-3 py-1 bg-secondary-fixed text-on-secondary-fixed-variant rounded-full font-label-sm text-label-sm">Familia</span>
+<span class="text-outline font-label-sm text-label-sm">23 oct. 2023</span>
+</div>
+<p class="font-headline-md text-headline-md text-on-surface mb-4">Mateo</p>
+<p class="font-body-md text-body-md text-tertiary italic mb-8 leading-relaxed">
+                        "Por sabiduría para navegar conversaciones difíciles con mis padres. Buscando un puente de entendimiento y una conexión restaurada."
+                    </p>
+</div>
+<div class="space-y-4">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary scale-90" style="font-variation-settings: 'FILL' 1;">favorite</span>
+<span class="font-label-md text-label-md text-on-surface-variant">45 orando</span>
+</div>
+<button class="flex items-center gap-1.5 px-3 py-1.5 bg-amber-50 border border-amber-200/50 rounded-full font-label-sm text-[11px] uppercase tracking-wider text-amber-800" disabled=""><span class="material-symbols-outlined text-[16px] text-amber-500 candle-flicker" style="font-variation-settings: 'FILL' 1;">mode_fan</span>Vela encendida</button>
+</div>
+<button class="amen-btn w-full group relative flex items-center justify-center gap-2 px-5 py-2.5 bg-primary text-on-primary rounded-full font-label-md text-label-md hover:bg-primary-container transition-all active:scale-95" onclick="handleAmen(this)">
+<span class="material-symbols-outlined text-[18px]">rebase_edit</span>
+                        Orar por esto
+                    </button>
+<div class="flex justify-center pt-2"><button class="text-label-sm text-secondary hover:text-primary transition-colors font-medium">Dar las gracias</button></div></div>
+</div>
+<!-- Prayer Card 3 (Premium Look) -->
+<div class="bg-surface-container-lowest rounded-xl p-8 shadow-sm border border-outline-variant/30 flex flex-col justify-between group hover:shadow-md transition-all duration-300 ring-1 ring-primary/10">
+<div>
+<div class="flex justify-between items-start mb-6">
+<div class="flex items-center gap-2">
+<span class="px-3 py-1 bg-secondary-fixed text-on-secondary-fixed-variant rounded-full font-label-sm text-label-sm">Gratitud</span>
+<span class="flex items-center gap-1 px-2 py-0.5 bg-primary-fixed text-on-primary-fixed font-label-sm text-[10px] rounded uppercase font-bold">Premium</span>
+</div>
+<span class="text-outline font-label-sm text-label-sm">22 oct. 2023</span>
+</div>
+<p class="font-headline-md text-headline-md text-on-surface mb-4">Sofía</p>
+<p class="font-body-md text-body-md text-tertiary italic mb-8 leading-relaxed">
+                        "Agradecida por las pequeñas misericordias mostradas esta semana. Gracias a la comunidad por las oraciones durante mi temporada de exámenes."
+                    </p>
+</div>
+<div class="space-y-4">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary scale-90" style="font-variation-settings: 'FILL' 1;">favorite</span>
+<span class="font-label-md text-label-md text-on-surface-variant">312 orando</span>
+</div>
+<button class="flex items-center gap-1.5 px-3 py-1.5 border border-outline-variant/50 rounded-full hover:bg-surface-variant transition-colors font-label-sm text-[11px] uppercase tracking-wider text-on-surface-variant group/candle" onclick="igniteCandle(this)"><span class="material-symbols-outlined text-[16px] group-hover/candle:text-amber-500">local_fire_department</span>Encender Vela<span class="ml-1 opacity-60">$0.99</span></button>
+</div>
+<button class="amen-btn w-full group relative flex items-center justify-center gap-2 px-5 py-2.5 bg-primary text-on-primary rounded-full font-label-md text-label-md hover:bg-primary-container transition-all active:scale-95" onclick="handleAmen(this)">
+<span class="material-symbols-outlined text-[18px]">rebase_edit</span>
+                        Orar por esto
+                    </button>
+<div class="flex justify-center pt-2"><button class="text-label-sm text-secondary hover:text-primary transition-colors font-medium">Dar las gracias</button></div></div>
+</div>
+<!-- CTA Card / New Request Placeholder -->
+<div class="rounded-xl p-8 border-2 border-dashed border-outline-variant flex flex-col items-center justify-center text-center group cursor-pointer hover:border-primary/40 hover:bg-surface-container-low transition-all">
+<div class="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-primary text-3xl">add</span>
+</div>
+<p class="font-headline-md text-headline-md text-on-surface mb-2">¿Tienes una necesidad?</p>
+<p class="font-body-md text-body-md text-tertiary mb-6">Publica tu petición y deja que la comunidad ore contigo.</p>
+<button class="px-6 py-2 border border-primary text-primary rounded-full font-label-md text-label-md hover:bg-primary hover:text-on-primary transition-colors">Publicar Petición</button>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container py-16 border-t border-outline-variant/30">
+<div class="max-w-container-max-width mx-auto px-margin-mobile md:px-margin-desktop flex flex-col md:flex-row justify-between items-center gap-12">
+<div class="text-center md:text-left">
+<h4 class="font-headline-md text-primary mb-4">Oremos</h4>
+<p class="text-on-surface-variant text-label-md max-w-xs leading-relaxed">Un espacio sagrado para la intercesión y la paz comunitaria.</p>
+</div>
+<div class="flex flex-col md:flex-row items-center gap-8 md:gap-12">
+<button class="text-secondary font-label-md flex items-center gap-2 hover:opacity-80 transition-opacity">
+<span class="material-symbols-outlined">volunteer_activism</span>
+                    Apoya nuestra misión
+                </button>
+<span class="hidden md:block text-outline-variant">|</span>
+<p class="text-outline text-label-sm">© 2023 Oremos. Todos los derechos reservados.</p>
+</div>
+</div>
+</footer>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pb-4 pt-2 bg-surface/90 backdrop-blur-lg z-50 rounded-t-2xl shadow-[0_-8px_32px_rgba(0,0,0,0.05)] border-t border-outline-variant/20">
+<div class="flex flex-col items-center justify-center text-on-surface-variant opacity-60 p-2">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-sm text-label-sm">Inicio</span>
+</div>
+<div class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-2xl px-6 py-2 transition-all">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">rebase_edit</span>
+<span class="font-label-sm text-label-sm font-bold">Muro</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant opacity-60 p-2">
+<span class="material-symbols-outlined">add_circle</span>
+<span class="font-label-sm text-label-sm">Pedir</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant opacity-60 p-2">
+<span class="material-symbols-outlined">volunteer_activism</span>
+<span class="font-label-sm text-label-sm">Donar</span>
+</div>
+</nav>
+<!-- Interaction Scripts -->
+<script>
+        function handleAmen(button) {
+            button.classList.add('amen-pulse', 'bg-secondary');
+            button.classList.remove('bg-primary');
+            button.innerHTML = `
+                <span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">favorite</span>
+                Amén
+            `;
+            button.style.boxShadow = "0 0 30px rgba(107, 85, 132, 0.3)";
+            const container = button.closest('.space-y-4');
+            const counterText = container.querySelector('.text-on-surface-variant:last-child');
+            if (counterText) {
+                let currentCount = parseInt(counterText.innerText);
+                counterText.innerText = (currentCount + 1) + " orando";
+                counterText.classList.add('text-secondary', 'font-bold');
+            }
+            button.disabled = true;
+            button.style.opacity = "0.9";
+        }
+
+        function igniteCandle(button) {
+            const icon = button.querySelector('.material-symbols-outlined');
+            icon.style.fontVariationSettings = "'FILL' 1";
+            icon.classList.add('candle-flicker', 'text-amber-500');
+            button.classList.add('bg-amber-50/50', 'border-amber-200/50', 'text-amber-800');
+            button.innerHTML = `
+                <span class="material-symbols-outlined text-[16px] text-amber-500 candle-flicker" style="font-variation-settings: 'FILL' 1;">mode_fan</span>
+                Encendida
+            `;
+            button.disabled = true;
+        }
+    </script>
+</body></html>
