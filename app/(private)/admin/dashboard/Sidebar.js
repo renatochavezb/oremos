@@ -4,6 +4,7 @@ import Link from "next/link";
 import {
   HomeIcon,
   UsersIcon,
+  LockClosedIcon,
   ArrowLeftOnRectangleIcon,
 } from "@heroicons/react/24/outline";
 import { usePathname } from "next/navigation";
@@ -20,6 +21,11 @@ const sidebarOptions = [
     href: "/admin/dashboard/users",
     label: "Users",
     icon: UsersIcon,
+  },
+  {
+    href: "/muro-privado",
+    label: "Muro Privado",
+    icon: LockClosedIcon,
   },
 ];
 

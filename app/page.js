@@ -84,9 +84,6 @@ export default function Page() {
               Vela
             </p>
           </div>
-          <span className="bg-secondary text-on-secondary px-2.5 py-0.5 rounded-full text-[10px] font-bold shadow-sm">
-            $0.99
-          </span>
         </button>
       </div>
 
@@ -200,7 +197,7 @@ export default function Page() {
                   >
                     <span className="material-symbols-outlined text-sm animate-flicker">light_mode</span>
                     <span className="text-[10px] font-bold uppercase tracking-wider font-sans">
-                      Encender Vela ($0.99)
+                      Encender Vela
                     </span>
                   </button>
                 </div>

@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { auth } from "@/libs/auth";
 import connectMongo from "@/libs/mongoose";
+import { canAccessPrivateWall } from "@/libs/roles";
 import PrayerRequest from "@/models/PrayerRequest";
 import User from "@/models/User";
 
@@ -19,6 +20,13 @@ export async function POST(req, { params }) {
     const prayer = await PrayerRequest.findById(id);
     if (!prayer) {
       return NextResponse.json({ error: "Petición no encontrada" }, { status: 404 });
+    }
+
+    if (!prayer.isPublic && !canAccessPrivateWall(session.user.role)) {
+      return NextResponse.json(
+        { error: "Esta petición es confidencial y solo puede ser atendida por el equipo de intercesión" },
+        { status: 403 }
+      );
     }
 
     if (session?.user) {

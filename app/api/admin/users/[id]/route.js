@@ -74,7 +74,7 @@ export async function PUT(req, { params }) {
     }
 
     // Validate role
-    const validRoles = ["user", "admin", "editor", "moderator"];
+    const validRoles = ["user", "admin", "editor", "moderator", "intercessor"];
     if (role && !validRoles.includes(role)) {
       console.log("❌ Invalid role:", role);
       return NextResponse.json({ error: "Invalid role" }, { status: 400 });

@@ -8,6 +8,8 @@ import Footer from "@/components/Footer";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { createRipple } from "@/libs/ripple";
+import { getPrivatePrayerCardClasses, getPublicPrayerCardClasses } from "@/libs/prayerStyles";
+import PrayerPrivacyBadge from "@/components/PrayerPrivacyBadge";
 
 const groupsData = [
   {
@@ -296,11 +298,21 @@ export default function Comunidad() {
                     </div>
                   ) : (
                     userStats.joinedPrayers.map((prayer) => (
-                      <div key={prayer.id} className="bg-base-100 rounded-2xl p-6 border border-base-content/5 hover:border-secondary/35 transition-all shadow-sm flex flex-col justify-between">
+                      <div
+                        key={prayer.id}
+                        className={`rounded-2xl p-6 border transition-all shadow-sm flex flex-col justify-between ${
+                          prayer.isPublic === false
+                            ? `${getPrivatePrayerCardClasses()} hover:shadow-lg`
+                            : `${getPublicPrayerCardClasses()} hover:border-secondary/35`
+                        }`}
+                      >
                         <div>
-                          <div className="flex justify-between items-start mb-4">
-                            <span className="text-xs font-bold text-secondary uppercase tracking-wider">{prayer.category}</span>
-                            <span className="text-xs text-base-content/40 italic">{formatDate(prayer.createdAt)}</span>
+                          <div className="flex justify-between items-start mb-4 gap-2">
+                            <div className="flex flex-wrap items-center gap-2">
+                              {prayer.isPublic === false && <PrayerPrivacyBadge />}
+                              <span className="text-xs font-bold text-secondary uppercase tracking-wider">{prayer.category}</span>
+                            </div>
+                            <span className="text-xs text-base-content/40 italic shrink-0">{formatDate(prayer.createdAt)}</span>
                           </div>
                           <p className="font-display text-base text-base-content/85 leading-relaxed mb-6 italic">
                             &ldquo;{prayer.text}&rdquo;
@@ -329,11 +341,23 @@ export default function Comunidad() {
                     </div>
                   ) : (
                     userStats.activeChains.map((prayer) => (
-                      <div key={prayer.id} className="bg-base-100 rounded-2xl p-6 border border-base-content/5 hover:border-primary/35 transition-all shadow-sm flex flex-col justify-between">
+                      <div
+                        key={prayer.id}
+                        className={`rounded-2xl p-6 border transition-all shadow-sm flex flex-col justify-between ${
+                          prayer.isPublic === false
+                            ? `${getPrivatePrayerCardClasses()} hover:shadow-lg`
+                            : `${getPublicPrayerCardClasses()} hover:border-primary/35`
+                        }`}
+                      >
                         <div>
-                          <div className="flex justify-between items-start mb-4">
-                            <span className="text-xs font-bold text-primary uppercase tracking-wider">{prayer.category}</span>
-                            <div className="flex items-center gap-2">
+                          <div className="flex justify-between items-start mb-4 gap-2">
+                            <div className="flex flex-wrap items-center gap-2">
+                              {prayer.isPublic === false && <PrayerPrivacyBadge />}
+                              <span className={`text-xs font-bold uppercase tracking-wider ${prayer.isPublic === false ? "text-secondary" : "text-primary"}`}>
+                                {prayer.category}
+                              </span>
+                            </div>
+                            <div className="flex items-center gap-2 shrink-0">
                               <span className="text-xs text-base-content/40 italic">{formatDate(prayer.createdAt)}</span>
                               <button
                                 onClick={(e) => {
@@ -352,8 +376,12 @@ export default function Comunidad() {
                           </p>
                         </div>
                         <div className="flex justify-between items-center pt-4 border-t border-base-content/5 text-xs text-base-content/75">
-                          <span>{prayer.prayersCount || 0} orando por esto</span>
-                          <span className="font-bold text-primary">Tú</span>
+                          <span>
+                            {prayer.isPublic === false
+                              ? `${prayer.prayersCount || 0} intercesiones del equipo`
+                              : `${prayer.prayersCount || 0} orando por esto`}
+                          </span>
+                          <span className={`font-bold ${prayer.isPublic === false ? "text-secondary" : "text-primary"}`}>Tú</span>
                         </div>
                       </div>
                     ))

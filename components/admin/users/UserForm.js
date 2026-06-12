@@ -30,6 +30,7 @@ export default function UserForm({
 
   const roleOptions = [
     { value: "user", label: "User" },
+    { value: "intercessor", label: "Intercessor" },
     { value: "admin", label: "Admin" },
     { value: "editor", label: "Editor" },
     { value: "moderator", label: "Moderator" },

@@ -3,11 +3,13 @@
 import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { useSession, signIn } from "next-auth/react";
+import { canAccessPrivateWall } from "@/libs/roles";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { createRipple } from "@/libs/ripple";
+import { getPublicPrayerCardClasses } from "@/libs/prayerStyles";
 
 const categories = ["Todas las Peticiones", "Salud", "Paz", "Gratitud", "Familia", "Otros"];
 
@@ -121,7 +123,7 @@ export default function Muro() {
   };
 
   const handleIgniteCandle = async (id) => {
-    toast.success("Redirigiendo a la compra de Vela Digital ($0.99)...");
+    toast.success("Redirigiendo para encender una Vela Digital...");
     setTimeout(() => {
       window.location.href = `/apoyo?prayerId=${id}`;
     }, 1000);
@@ -163,6 +165,28 @@ export default function Muro() {
           </p>
         </section>
 
+        {canAccessPrivateWall(session?.user?.role) && (
+          <section className="mb-6 font-sans">
+            <div className="bg-primary/5 border border-primary/20 rounded-2xl p-5 flex flex-col sm:flex-row items-center justify-between gap-4">
+              <div className="flex items-center gap-3">
+                <span className="material-symbols-outlined text-primary text-2xl">lock</span>
+                <div>
+                  <h3 className="font-bold text-primary text-sm">Panel del equipo de intercesión</h3>
+                  <p className="text-xs text-base-content/70">Revisa y atiende las peticiones confidenciales.</p>
+                </div>
+              </div>
+              <Link
+                href="/muro-privado"
+                onClick={(e) => createRipple(e, e.currentTarget)}
+                className="whitespace-nowrap px-6 py-3 bg-primary text-primary-content hover:opacity-95 rounded-full text-xs font-bold shadow-md flex items-center gap-2"
+              >
+                Ir al Muro Privado
+                <span className="material-symbols-outlined text-sm">arrow_forward</span>
+              </Link>
+            </div>
+          </section>
+        )}
+
         {/* Premium CTA Banner */}
         <section className="mb-12 font-sans">
           <div className="bg-base-200/60 border border-base-content/5 rounded-2xl p-6 flex flex-col md:flex-row items-center justify-between gap-6">
@@ -172,7 +196,7 @@ export default function Muro() {
               </div>
               <div>
                 <h3 className="font-bold text-base-content text-base">Peticiones Privadas</h3>
-                <p className="text-xs text-base-content/70">Comparte tu carga solo con nuestro equipo de intercesores dedicados.</p>
+                <p className="text-xs text-base-content/70">Comparte tu carga de forma confidencial con nuestro equipo de intercesión.</p>
               </div>
             </div>
             <Link
@@ -222,11 +246,7 @@ export default function Muro() {
               return (
                 <div
                   key={prayer.id}
-                  className={`bg-base-100 rounded-2xl p-8 shadow-sm border flex flex-col justify-between group hover:shadow-md transition-all duration-300 ${
-                    prayer.hasActiveCandle
-                      ? "border-amber-300 ring-2 ring-amber-100/50 bg-gradient-to-b from-base-100 to-amber-50/10"
-                      : "border-base-content/5"
-                  }`}
+                  className={`rounded-2xl p-8 shadow-sm border flex flex-col justify-between group hover:shadow-md transition-all duration-300 ${getPublicPrayerCardClasses({ hasActiveCandle: prayer.hasActiveCandle })}`}
                 >
                   <div>
                     {/* Header: Candle badge, category & date */}
@@ -239,7 +259,10 @@ export default function Muro() {
                           {prayer.activeCandlesCount} vela{prayer.activeCandlesCount > 1 ? "s" : ""}
                         </span>
                       ) : (
-                        <span className="text-base-content/40 italic">Muro Público</span>
+                        <span className="flex items-center gap-1 px-2 py-0.5 bg-primary/8 text-primary text-[10px] rounded uppercase font-bold">
+                          <span className="material-symbols-outlined text-xs">public</span>
+                          Pública
+                        </span>
                       )}
                       <div className="flex items-center gap-2">
                         <span className="px-3 py-1 bg-secondary-container text-on-secondary-container rounded-full font-bold text-[10px]">

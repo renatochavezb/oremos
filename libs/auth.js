@@ -92,18 +92,37 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       return session;
     },
     async signIn({ user, account, profile }) {
-      // Fallback: ensure existing users have a role
-      if (user.id && !user.role) {
-        try {
-          await connectMongoose();
-          const dbUser = await User.findById(user.id);
-          if (dbUser && !dbUser.role) {
-            await User.findByIdAndUpdate(user.id, { role: "user" });
-            user.role = "user";
-          }
-        } catch (error) {
-          console.error("Error setting fallback role for existing user:", error);
+      try {
+        await connectMongoose();
+
+        const email = user.email?.toLowerCase();
+        const adminEmails = (process.env.ADMIN_EMAILS || "")
+          .split(",")
+          .map((e) => e.trim().toLowerCase())
+          .filter(Boolean);
+        const intercessorEmails = (process.env.INTERCESSOR_EMAILS || "")
+          .split(",")
+          .map((e) => e.trim().toLowerCase())
+          .filter(Boolean);
+
+        let role = user.role || "user";
+        if (email && adminEmails.includes(email)) {
+          role = "admin";
+        } else if (email && intercessorEmails.includes(email)) {
+          role = "intercessor";
         }
+
+        if (user.id) {
+          const dbUser = await User.findById(user.id);
+          if (dbUser && dbUser.role !== role) {
+            await User.findByIdAndUpdate(user.id, { role });
+          } else if (!dbUser?.role) {
+            await User.findByIdAndUpdate(user.id, { role });
+          }
+          user.role = role;
+        }
+      } catch (error) {
+        console.error("Error setting user role on sign in:", error);
       }
       return true;
     },

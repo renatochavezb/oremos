@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { auth } from "@/libs/auth";
 import connectMongo from "@/libs/mongoose";
+import { getDbErrorMessage } from "@/libs/dbError";
 import PrayerRequest from "@/models/PrayerRequest";
 import User from "@/models/User";
 
@@ -58,7 +59,7 @@ export async function GET(req) {
     return NextResponse.json(processedPrayers);
   } catch (error) {
     console.error("Error in GET /api/prayers:", error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    return NextResponse.json({ error: getDbErrorMessage(error) }, { status: 500 });
   }
 }
 
@@ -107,6 +108,6 @@ export async function POST(req) {
     return NextResponse.json(newPrayer, { status: 201 });
   } catch (error) {
     console.error("Error in POST /api/prayers:", error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    return NextResponse.json({ error: getDbErrorMessage(error) }, { status: 500 });
   }
 }

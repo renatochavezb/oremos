@@ -9,6 +9,7 @@ import Footer from "@/components/Footer";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { createRipple } from "@/libs/ripple";
+import PrayerPrivacyBadge from "@/components/PrayerPrivacyBadge";
 
 const categories = ["Salud", "Paz", "Gratitud", "Familia", "Otros"];
 
@@ -68,7 +69,13 @@ function NewPrayerRequestContent() {
             Inicia sesión para publicar tu petición de oración y permitir que toda la comunidad ore contigo.
           </p>
           <button
-            onClick={() => signIn(undefined, { callbackUrl: "/nueva-peticion" })}
+            onClick={() =>
+              signIn(undefined, {
+                callbackUrl: searchParams.get("private") === "true"
+                  ? "/nueva-peticion?private=true"
+                  : "/nueva-peticion",
+              })
+            }
             className="bg-primary text-primary-content hover:bg-primary/95 px-8 py-3 rounded-full font-bold shadow-md cursor-pointer inline-flex items-center gap-2"
           >
             <span className="material-symbols-outlined text-lg">login</span>
@@ -97,11 +104,22 @@ function NewPrayerRequestContent() {
         isAnonymous,
       });
 
-      toast.success("Tu petición ha sido compartida. La paz sea contigo.");
-      router.push("/muro");
+      if (isPublic) {
+        toast.success("Tu petición ha sido compartida. La paz sea contigo.");
+        router.push("/muro");
+      } else {
+        toast.success(
+          "Tu petición confidencial fue recibida. Nuestro equipo de intercesión orará por ti."
+        );
+        router.push("/");
+      }
     } catch (error) {
       console.error("Error creating prayer:", error);
-      const msg = error.response?.data?.error || "Error al enviar la petición";
+      const msg =
+        error.response?.data?.error ||
+        (error.code === "ECONNABORTED"
+          ? "La solicitud tardó demasiado. Verifica tu conexión e intenta de nuevo."
+          : "Error al enviar la petición. Intenta de nuevo en unos segundos.");
       toast.error(msg);
     } finally {
       setSubmitting(false);
@@ -161,7 +179,24 @@ function NewPrayerRequestContent() {
 
           {/* Right Side: Form */}
           <div className="lg:col-span-8">
-            <div className="bg-base-100 shadow-sm hover:shadow-md border border-base-content/5 rounded-3xl p-8 md:p-12 transition-all duration-300">
+            <div
+              className={`shadow-sm hover:shadow-md border rounded-3xl p-8 md:p-12 transition-all duration-300 ${
+                isPublic ? "bg-base-100 border-base-content/5" : "prayer-form-private"
+              }`}
+            >
+              {!isPublic && (
+                <div className="mb-8 p-4 rounded-2xl prayer-private-notice flex items-start gap-3">
+                  <span className="material-symbols-outlined text-secondary text-xl mt-0.5">lock</span>
+                  <div>
+                    <div className="flex flex-wrap items-center gap-2 mb-1">
+                      <PrayerPrivacyBadge size="md" />
+                    </div>
+                    <p className="text-sm text-base-content/75 leading-relaxed">
+                      Esta petición será confidencial. Solo nuestro equipo de intercesión la recibirá; no aparecerá en el muro público.
+                    </p>
+                  </div>
+                </div>
+              )}
               <form onSubmit={handleSubmit} className="space-y-10">
                 
                 {/* Name Input */}

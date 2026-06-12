@@ -172,7 +172,7 @@ function SupportContent() {
               disabled={submittingCandle}
               className="bg-amber-500 hover:bg-amber-600 text-white px-8 py-3 rounded-full font-bold text-xs uppercase tracking-wider shadow-sm transition-all cursor-pointer whitespace-nowrap"
             >
-              {submittingCandle ? "Encendiendo..." : "Confirmar Vela ($0.99)"}
+              {submittingCandle ? "Encendiendo..." : "Confirmar Vela"}
             </button>
           </div>
         </section>
@@ -250,9 +250,6 @@ function SupportContent() {
             <p className="text-sm text-base-content/70 mb-4 leading-relaxed">
               Un acto simbólico para iluminar tus peticiones. Enciende una vela virtual que permanecerá brillante en el muro de oración durante 24 horas.
             </p>
-            <div className="text-secondary font-display text-3xl mb-8">
-              $0.99 <span className="text-sm opacity-60">por vela</span>
-            </div>
           </div>
           <button
             onClick={(e) => {

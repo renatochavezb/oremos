@@ -163,3 +163,46 @@ progress::-webkit-progress-value {
 .premium-gradient {
   background: linear-gradient(135deg, rgba(107, 85, 132, 0.05) 0%, rgba(61, 95, 124, 0.05) 100%);
 }
+
+.prayer-card-private {
+  background: linear-gradient(
+    165deg,
+    rgba(107, 85, 132, 0.28) 0%,
+    rgba(107, 85, 132, 0.16) 42%,
+    rgba(237, 232, 243, 0.95) 100%
+  );
+  border: 2px solid rgba(107, 85, 132, 0.45);
+  box-shadow: 0 14px 34px -14px rgba(107, 85, 132, 0.38);
+}
+
+.prayer-card-private--attended {
+  background: linear-gradient(
+    165deg,
+    rgba(107, 85, 132, 0.22) 0%,
+    rgba(107, 85, 132, 0.14) 100%
+  );
+  border-color: rgba(107, 85, 132, 0.55);
+}
+
+.prayer-form-private {
+  background: linear-gradient(
+    180deg,
+    rgba(107, 85, 132, 0.22) 0%,
+    rgba(225, 216, 236, 0.85) 32%,
+    rgba(251, 249, 248, 1) 68%
+  );
+  border: 2px solid rgba(107, 85, 132, 0.4);
+}
+
+.prayer-private-surface {
+  background: linear-gradient(
+    180deg,
+    rgba(107, 85, 132, 0.14) 0%,
+    rgba(251, 249, 248, 0) 100%
+  );
+}
+
+.prayer-private-notice {
+  background: rgba(107, 85, 132, 0.2);
+  border: 2px solid rgba(107, 85, 132, 0.35);
+}

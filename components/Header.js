@@ -3,6 +3,8 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useSession } from "next-auth/react";
+import { canAccessPrivateWall } from "@/libs/roles";
+import ButtonAccount from "./ButtonAccount";
 import ButtonSignin from "./ButtonSignin";
 
 const Header = () => {
@@ -16,6 +18,8 @@ const Header = () => {
     { href: "/comunidad", label: "Comunidad", icon: "group" },
     { href: "/apoyo", label: "Apoyo", icon: "volunteer_activism" },
   ];
+
+  const showPrivateWall = canAccessPrivateWall(session?.user?.role);
 
   return (
     <>
@@ -45,7 +49,16 @@ const Header = () => {
           </div>
 
           {/* User Signin / Profile */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
+            {showPrivateWall && (
+              <Link
+                href="/muro-privado"
+                className="flex items-center gap-1.5 px-3 sm:px-4 py-2 text-primary border border-primary/30 rounded-full hover:bg-primary/5 transition-colors font-sans text-xs font-semibold"
+              >
+                <span className="material-symbols-outlined text-[18px]">lock</span>
+                <span className="hidden sm:inline">Muro Privado</span>
+              </Link>
+            )}
             <Link
               href="/apoyo"
               className="hidden sm:flex items-center gap-1.5 px-4 py-2 text-secondary border border-secondary/30 rounded-full hover:bg-secondary/5 transition-colors font-sans text-xs font-semibold"
@@ -53,12 +66,11 @@ const Header = () => {
               <span className="material-symbols-outlined text-[18px]" style={{ fontVariationSettings: "'FILL' 0" }}>volunteer_activism</span>
               Donar
             </Link>
-            {session && (
-              <button className="text-base-content/70 hover:text-primary p-2 transition-colors duration-300 rounded-full flex items-center justify-center">
-                <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 0" }}>notifications</span>
-              </button>
+            {session ? (
+              <ButtonAccount />
+            ) : (
+              <ButtonSignin text="Iniciar Sesión" extraStyle="btn-primary rounded-full px-6 btn-sm md:btn-md" />
             )}
-            <ButtonSignin text="Iniciar Sesión" extraStyle="btn-primary rounded-full px-6 btn-sm md:btn-md" />
           </div>
         </div>
       </nav>
