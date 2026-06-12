@@ -1,0 +1,350 @@
+"use client";
+
+import { useState, useEffect, Suspense } from "react";
+import { useSession } from "next-auth/react";
+import { useRouter, useSearchParams } from "next/navigation";
+import Link from "next/link";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import axios from "axios";
+import toast from "react-hot-toast";
+import { createRipple } from "@/libs/ripple";
+
+const categories = ["Salud", "Paz", "Gratitud", "Familia", "Otros"];
+
+function NewPrayerRequestContent() {
+  const { data: session, status } = useSession();
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  // Form states
+  const [name, setName] = useState("");
+  const [activeCategory, setActiveCategory] = useState("Otros");
+  const [text, setText] = useState("");
+  const [isPublic, setIsPublic] = useState(true);
+  const [submitting, setSubmitting] = useState(false);
+
+  // Set privacy from query param if redirected from Private CTA
+  useEffect(() => {
+    const isPrivateParam = searchParams.get("private");
+    if (isPrivateParam === "true" && session) {
+      setIsPublic(false);
+    }
+  }, [searchParams, session]);
+
+  // Scroll Reveal Observer
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("opacity-100", "translate-y-0");
+            entry.target.classList.remove("opacity-0", "translate-y-4");
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    const elements = document.querySelectorAll("section, .grid > div");
+    elements.forEach((el) => {
+      el.classList.add("transition-all", "duration-700", "opacity-0", "translate-y-4");
+      observer.observe(el);
+    });
+
+    return () => {
+      elements.forEach((el) => observer.unobserve(el));
+    };
+  }, []);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!text.trim()) {
+      toast.error("El texto de la petición es requerido");
+      return;
+    }
+
+    setSubmitting(true);
+    try {
+      const isAnonymous = name.trim() === "";
+      await axios.post("/api/prayers", {
+        text,
+        category: activeCategory,
+        isPublic,
+        isAnonymous,
+      });
+
+      toast.success("Tu petición ha sido compartida. La paz sea contigo.");
+      router.push("/muro");
+    } catch (error) {
+      console.error("Error creating prayer:", error);
+      const msg = error.response?.data?.error || "Error al enviar la petición";
+      toast.error(msg);
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  const handlePremiumCheck = (type) => {
+    if (status !== "authenticated") {
+      toast.error("Debes iniciar sesión para usar funciones Premium");
+      return;
+    }
+    setIsPublic(false);
+  };
+
+  return (
+    <>
+      <main className="pt-12 pb-32 min-h-screen px-6 md:px-12 max-w-7xl mx-auto">
+        {/* Hero Section */}
+        <section className="text-center mb-16">
+          <div className="inline-block px-4 py-1.5 bg-secondary-container/30 text-secondary rounded-full mb-6 font-sans text-xs font-bold shadow-sm">
+            Santuario Seguro
+          </div>
+          <h2 className="font-display text-4xl md:text-5xl text-primary mb-4 font-medium">No estás solo.</h2>
+          <p className="font-display text-lg md:text-2xl text-base-content/75 max-w-xl mx-auto italic">
+            &ldquo;Comparte tu corazón. Cada susurro es escuchado en la quietud.&rdquo;
+          </p>
+        </section>
+
+        {/* Content Section */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start font-sans">
+          
+          {/* Left Side: Visual Card */}
+          <div className="hidden lg:block lg:col-span-4 sticky top-32">
+            <div className="rounded-2xl overflow-hidden aspect-[3/4] shadow-lg relative border border-base-content/5">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                alt="Atmósfera de paz"
+                className="w-full h-full object-cover opacity-80"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXCxn9tG3wIi5NfNLw4btV_80C4OtRjNzLjUsOH6QITzd4mNQ2uxbOmNRni8P_mem2kPscuL_lIYfK3QDXAa7MoagSSFuUEJBkAz7XRn68L1oGriE_AfyebFv_E1h9U2mQnM8dQlug8BmMMSK8qbo03NZw7UsOY-pgZQb2EDRUqYJ6UFkMr9SBHsthdXn7rRA28lp-AMhjpOqNTASiHnAvZGjuZgxAFo0QXH5Tb9EaJ0kE_6aHy5IqDyRJyS7rMgDyK8i_QDOy78eTE"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-primary/40 to-transparent"></div>
+              <div className="absolute bottom-8 left-8 right-8 text-white">
+                <p className="font-display text-xl italic mb-2">Hallando la Calma</p>
+                <p className="text-xs opacity-90 leading-relaxed font-sans">
+                  En la unión de los corazones, hay una fuerza que trasciende la nuestra.
+                </p>
+              </div>
+            </div>
+            
+            <div className="mt-8 p-6 bg-base-200/50 rounded-xl border border-base-content/5 text-center text-xs italic text-base-content/70">
+              Mantenemos este santuario libre de anuncios gracias a almas generosas.{" "}
+              <Link href="/apoyo" className="text-primary font-bold underline">
+                Apoya nuestra misión.
+              </Link>
+            </div>
+          </div>
+
+          {/* Right Side: Form */}
+          <div className="lg:col-span-8">
+            <div className="bg-base-100 shadow-sm hover:shadow-md border border-base-content/5 rounded-3xl p-8 md:p-12 transition-all duration-300">
+              <form onSubmit={handleSubmit} className="space-y-10">
+                
+                {/* Name Input */}
+                <div className="flex flex-col gap-3">
+                  <label className="text-xs font-bold text-primary uppercase tracking-widest font-sans" htmlFor="name">
+                    TU NOMBRE (OPCIONAL)
+                  </label>
+                  <input
+                    id="name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    placeholder="Deja en blanco para permanecer anónimo"
+                    type="text"
+                    className="w-full bg-transparent border-b-2 border-base-content/10 py-3 text-lg font-display placeholder:italic placeholder:opacity-45 focus:outline-none focus:border-primary transition-colors duration-300"
+                  />
+                </div>
+
+                {/* Category Selector */}
+                <div className="flex flex-col gap-4">
+                  <span className="text-xs font-bold text-primary uppercase tracking-widest font-sans">
+                    SELECCIONA UNA CATEGORÍA
+                  </span>
+                  <div className="flex flex-wrap gap-2.5">
+                    {categories.map((cat) => (
+                      <button
+                        key={cat}
+                        type="button"
+                        onClick={(e) => {
+                          createRipple(e, e.currentTarget, "rgba(107, 85, 132, 0.2)");
+                          setActiveCategory(cat);
+                        }}
+                        className={`px-5 py-2.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
+                          activeCategory === cat
+                            ? "bg-secondary text-on-secondary shadow-sm scale-95"
+                            : "bg-secondary-container/20 text-secondary hover:bg-secondary-container/40"
+                        }`}
+                      >
+                        {cat}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Request Textarea */}
+                <div className="flex flex-col gap-3">
+                  <label className="text-xs font-bold text-primary uppercase tracking-widest font-sans" htmlFor="request">
+                    TU PETICIÓN
+                  </label>
+                  <textarea
+                    id="request"
+                    value={text}
+                    onChange={(e) => setText(e.target.value)}
+                    placeholder="Estoy pidiendo por..."
+                    rows={5}
+                    className="w-full bg-transparent border-b-2 border-base-content/10 py-3 text-lg font-display placeholder:italic placeholder:opacity-45 focus:outline-none focus:border-primary transition-colors duration-300 resize-none font-sans"
+                    required
+                  />
+                </div>
+
+                {/* Privacy Settings */}
+                <div className="flex flex-col gap-4">
+                  <div className="flex justify-between items-center text-xs">
+                    <span className="font-bold text-primary uppercase tracking-widest font-sans">
+                      AJUSTES DE PRIVACIDAD
+                    </span>
+                    <span className="text-secondary flex items-center gap-1 opacity-80 font-bold font-sans">
+                      <span className="material-symbols-outlined text-sm animate-pulse">auto_awesome</span>
+                      Funciones Premium
+                    </span>
+                  </div>
+
+                  <div className="space-y-4">
+                    {/* Public Option */}
+                    <label className="relative flex items-center p-5 rounded-2xl border border-primary/20 bg-primary/5 cursor-pointer hover:bg-primary/10 transition-colors group">
+                      <input
+                        checked={isPublic}
+                        onChange={() => setIsPublic(true)}
+                        className="radio radio-primary radio-sm mr-4"
+                        name="privacy"
+                        type="radio"
+                      />
+                      <div className="flex flex-col">
+                        <span className="text-sm font-bold text-base-content font-sans">Muro de Oración Público</span>
+                        <span className="text-xs text-base-content/60 mt-0.5 font-sans">Comparte con toda la comunidad de Oremos</span>
+                      </div>
+                      <span className="material-symbols-outlined ml-auto text-primary opacity-60 group-hover:opacity-100 transition-opacity">
+                        public
+                      </span>
+                    </label>
+
+                    {/* Premium Options */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {/* Groups Option */}
+                      <div
+                        onClick={(e) => {
+                          createRipple(e, e.currentTarget, "rgba(107, 85, 132, 0.2)");
+                          handlePremiumCheck("groups");
+                        }}
+                        className={`relative flex items-center p-5 rounded-2xl border transition-colors cursor-pointer group ${
+                          !isPublic
+                            ? "border-secondary/20 bg-secondary/5"
+                            : "border-base-content/10 bg-base-200/40 opacity-70 hover:opacity-100"
+                        }`}
+                      >
+                        <input
+                          checked={!isPublic}
+                          onChange={() => setIsPublic(false)}
+                          className="radio radio-secondary radio-sm mr-4"
+                          name="privacy"
+                          type="radio"
+                        />
+                        <div className="flex flex-col">
+                          <div className="flex items-center gap-2">
+                            <span className="text-sm font-bold text-base-content font-sans">Grupos Privados</span>
+                            <span className="bg-secondary/15 text-secondary text-[8px] px-1.5 py-0.5 rounded font-bold uppercase tracking-wider font-sans">
+                              PREMIUM
+                            </span>
+                          </div>
+                          <span className="text-xs text-base-content/60 mt-0.5 font-sans">Solo para tus círculos</span>
+                        </div>
+                        <span className="material-symbols-outlined ml-auto text-base-content/40">
+                          lock
+                        </span>
+                      </div>
+
+                      {/* Secret option */}
+                      <div
+                        onClick={(e) => {
+                          createRipple(e, e.currentTarget, "rgba(107, 85, 132, 0.2)");
+                          handlePremiumCheck("private");
+                        }}
+                        className={`relative flex items-center p-5 rounded-2xl border transition-colors cursor-pointer group ${
+                          !isPublic
+                            ? "border-secondary/20 bg-secondary/5"
+                            : "border-base-content/10 bg-base-200/40 opacity-70 hover:opacity-100"
+                        }`}
+                      >
+                        <input
+                          checked={!isPublic}
+                          onChange={() => setIsPublic(false)}
+                          className="radio radio-secondary radio-sm mr-4"
+                          name="privacy"
+                          type="radio"
+                        />
+                        <div className="flex flex-col">
+                          <div className="flex items-center gap-2">
+                            <span className="text-sm font-bold text-base-content font-sans">Privadas Ilimitadas</span>
+                            <span className="bg-secondary/15 text-secondary text-[8px] px-1.5 py-0.5 rounded font-bold uppercase tracking-wider font-sans">
+                              PREMIUM
+                            </span>
+                          </div>
+                          <span className="text-xs text-base-content/60 mt-0.5 font-sans">Peticiones íntimas</span>
+                        </div>
+                        <span className="material-symbols-outlined ml-auto text-base-content/40">
+                          visibility_off
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Submit button */}
+                <div className="pt-6 flex flex-col items-center">
+                  <button
+                    type="submit"
+                    disabled={submitting}
+                    onClick={(e) => createRipple(e, e.currentTarget, "rgba(107, 85, 132, 0.4)")}
+                    className="w-full md:w-64 py-4 px-8 bg-primary hover:opacity-95 text-primary-content rounded-full font-bold text-xs tracking-widest uppercase transition-all shadow-md active:scale-95 flex items-center justify-center gap-2 cursor-pointer amen-glow"
+                  >
+                    {submitting ? (
+                      <span className="loading loading-spinner loading-xs font-sans"></span>
+                    ) : (
+                      <>
+                        <span>ENVIAR ORACIÓN</span>
+                        <span className="material-symbols-outlined text-lg">church</span>
+                      </>
+                    )}
+                  </button>
+                  <p className="mt-4 text-xs text-base-content/50 italic text-center font-sans">
+                    Tu petición será recibida con luz y amor.
+                  </p>
+                </div>
+
+              </form>
+            </div>
+          </div>
+
+        </div>
+      </main>
+    </>
+  );
+}
+
+export default function NuevaPeticion() {
+  return (
+    <>
+      <Header />
+      <Suspense fallback={
+        <div className="flex justify-center items-center py-24 min-h-screen">
+          <span className="loading loading-spinner loading-lg text-primary"></span>
+        </div>
+      }>
+        <NewPrayerRequestContent />
+      </Suspense>
+      <Footer />
+    </>
+  );
+}
