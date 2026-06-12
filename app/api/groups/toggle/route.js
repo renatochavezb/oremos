@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { auth } from "@/libs/auth";
-import connectMongo from "@/libs/mongo";
+import connectMongo from "@/libs/mongoose";
 import User from "@/models/User";
 
 // POST /api/groups/toggle - Toggle join/leave status for a faith community

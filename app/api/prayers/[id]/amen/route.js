@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { auth } from "@/libs/auth";
-import connectMongo from "@/libs/mongo";
+import connectMongo from "@/libs/mongoose";
 import PrayerRequest from "@/models/PrayerRequest";
 import User from "@/models/User";
 
@@ -9,6 +9,10 @@ export async function POST(req, { params }) {
   try {
     const { id } = await params;
     const session = await auth();
+
+    if (!session?.user) {
+      return NextResponse.json({ error: "Debes iniciar sesión para unirte en oración" }, { status: 401 });
+    }
 
     await connectMongo();
 

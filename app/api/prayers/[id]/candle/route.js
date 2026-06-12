@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import connectMongo from "@/libs/mongo";
+import connectMongo from "@/libs/mongoose";
 import PrayerRequest from "@/models/PrayerRequest";
 
 // POST /api/prayers/[id]/candle - Mock checkout success for a digital candle (adds a 24-hour active candle)

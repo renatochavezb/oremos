@@ -121,6 +121,25 @@ export default function Comunidad() {
     }
   };
 
+  const handleDelete = async (id) => {
+    if (!window.confirm("¿Estás seguro de que deseas eliminar esta petición de oración?")) return;
+
+    try {
+      await axios.delete(`/api/prayers/${id}`);
+      setUserStats((prev) => ({
+        ...prev,
+        activeChains: prev.activeChains.filter((p) => p.id !== id),
+        joinedPrayers: prev.joinedPrayers.filter((p) => p.id !== id),
+        joinedCount: prev.joinedPrayers.filter((p) => p.id !== id).length,
+      }));
+      toast.success("Petición de oración eliminada con éxito");
+    } catch (error) {
+      console.error("Error deleting prayer:", error);
+      const msg = error.response?.data?.error || "Error al eliminar la petición";
+      toast.error(msg);
+    }
+  };
+
   const formatDate = (dateStr) => {
     const d = new Date(dateStr);
     return d.toLocaleDateString("es-ES", { day: "numeric", month: "short", year: "numeric" });
@@ -314,7 +333,19 @@ export default function Comunidad() {
                         <div>
                           <div className="flex justify-between items-start mb-4">
                             <span className="text-xs font-bold text-primary uppercase tracking-wider">{prayer.category}</span>
-                            <span className="text-xs text-base-content/40 italic">{formatDate(prayer.createdAt)}</span>
+                            <div className="flex items-center gap-2">
+                              <span className="text-xs text-base-content/40 italic">{formatDate(prayer.createdAt)}</span>
+                              <button
+                                onClick={(e) => {
+                                  createRipple(e, e.currentTarget, "rgba(239, 68, 68, 0.2)");
+                                  handleDelete(prayer.id);
+                                }}
+                                className="text-error hover:text-error/80 cursor-pointer flex items-center justify-center"
+                                title="Eliminar petición"
+                              >
+                                <span className="material-symbols-outlined text-base">delete</span>
+                              </button>
+                            </div>
                           </div>
                           <p className="font-display text-base text-base-content/85 leading-relaxed mb-6 italic">
                             &ldquo;{prayer.text}&rdquo;

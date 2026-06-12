@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { auth } from "@/libs/auth";
-import connectMongo from "@/libs/mongo";
+import connectMongo from "@/libs/mongoose";
 import PrayerRequest from "@/models/PrayerRequest";
 
 // POST /api/prayers/[id]/thanks - Submit a gratitude update for a prayer request

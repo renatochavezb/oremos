@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
-import { useSession } from "next-auth/react";
+import { useSession, signIn } from "next-auth/react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import axios from "axios";
@@ -81,6 +81,13 @@ export default function Muro() {
   }, [prayers, loading]);
 
   const handleAmen = async (id) => {
+    if (!session) {
+      toast.error("Debes iniciar sesión para unirte en oración");
+      setTimeout(() => {
+        signIn(undefined, { callbackUrl: "/muro" });
+      }, 1000);
+      return;
+    }
     try {
       const response = await axios.post(`/api/prayers/${id}/amen`);
       const { prayersCount } = response.data;
@@ -95,6 +102,20 @@ export default function Muro() {
     } catch (error) {
       console.error("Error sending Amen:", error);
       const msg = error.response?.data?.error || "Error al registrar oración";
+      toast.error(msg);
+    }
+  };
+
+  const handleDelete = async (id) => {
+    if (!window.confirm("¿Estás seguro de que deseas eliminar esta petición de oración?")) return;
+
+    try {
+      await axios.delete(`/api/prayers/${id}`);
+      setPrayers((prev) => prev.filter((p) => p.id !== id));
+      toast.success("Petición de oración eliminada con éxito");
+    } catch (error) {
+      console.error("Error deleting prayer:", error);
+      const msg = error.response?.data?.error || "Error al eliminar la petición";
       toast.error(msg);
     }
   };
@@ -196,7 +217,7 @@ export default function Muro() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch font-sans">
             {/* Cards Feed */}
             {prayers.map((prayer) => {
-              const isOwner = session?.user && prayer.user?._id === session.user.id;
+              const isOwner = session?.user && prayer.user?._id?.toString() === session.user.id;
               
               return (
                 <div
@@ -225,6 +246,18 @@ export default function Muro() {
                           {prayer.category}
                         </span>
                         <span className="text-base-content/50">{formatDate(prayer.createdAt)}</span>
+                        {isOwner && (
+                          <button
+                            onClick={(e) => {
+                              createRipple(e, e.currentTarget, "rgba(239, 68, 68, 0.2)");
+                              handleDelete(prayer.id);
+                            }}
+                            className="text-error hover:text-error/80 ml-2 cursor-pointer flex items-center justify-center"
+                            title="Eliminar petición"
+                          >
+                            <span className="material-symbols-outlined text-base">delete</span>
+                          </button>
+                        )}
                       </div>
                     </div>
 

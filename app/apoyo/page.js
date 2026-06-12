@@ -2,7 +2,6 @@
 
 import { useState, useEffect, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
 import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -88,6 +87,7 @@ function SupportContent() {
   };
 
   const handleCandlePurchase = async (e) => {
+    if (e) e.preventDefault();
     if (!prayerId) {
       toast.error("Para encender una vela, por favor hazlo desde una petición en el Muro de Oración.");
       router.push("/muro");

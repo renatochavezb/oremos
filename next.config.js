@@ -22,7 +22,7 @@ const nextConfig = {
       },
     ],
   },
-  webpack: (config, { webpack, isServer }) => {
+  webpack: (config, { webpack, isServer, dev }) => {
     // Ignore MongoDB's optional dependencies to prevent build warnings
     if (isServer) {
       config.plugins.push(
@@ -30,6 +30,10 @@ const nextConfig = {
           resourceRegExp: /^(kerberos|@mongodb-js\/zstd|@aws-sdk\/credential-providers|gcp-metadata|snappy|socks|aws4|mongodb-client-encryption)$/,
         })
       );
+    }
+    
+    if (dev) {
+      config.cache = false;
     }
     
     return config;

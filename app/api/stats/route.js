@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import connectMongo from "@/libs/mongo";
+import connectMongo from "@/libs/mongoose";
 import PrayerRequest from "@/models/PrayerRequest";
 
 // GET /api/stats - Global statistics for Oremos

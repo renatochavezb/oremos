@@ -6,6 +6,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { createRipple } from "@/libs/ripple";
 
+// Testing hot reloading stability - clean run
 export default function Page() {
   const handleCandleClick = () => {
     window.location.href = "/apoyo";
@@ -312,118 +313,7 @@ export default function Page() {
         </div>
       </section>
 
-      {/* Pricing / Membership Plans */}
-      <section className="py-24 bg-base-100" id="planes">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="mb-16 text-center">
-            <h2 className="font-display text-3xl md:text-4xl text-primary mb-4 font-medium">
-              Apoya nuestra misión de conectar corazones
-            </h2>
-            <p className="font-sans text-sm md:text-base text-base-content/70 max-w-xl mx-auto">
-              Elige la forma que mejor se adapte a tu necesidad de conexión y apoyo espiritual.
-            </p>
-          </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch font-sans">
-            {/* Plan Gratuito */}
-            <div className="bg-base-200/50 p-8 rounded-[2rem] border border-base-content/5 flex flex-col justify-between hover:shadow-lg transition-shadow">
-              <div>
-                <h3 className="font-display text-xl md:text-2xl text-primary mb-2">Plan Gratuito</h3>
-                <p className="text-xs text-base-content/70 mb-6">Para empezar tu camino</p>
-                <div className="text-3xl md:text-4xl font-display text-base-content mb-8">Gratis</div>
-                <ul className="space-y-4 mb-10 text-sm">
-                  <li className="flex items-center gap-3 text-base-content/80">
-                    <span className="material-symbols-outlined text-secondary text-base">check_circle</span>
-                    Muro público de oraciones
-                  </li>
-                  <li className="flex items-center gap-3 text-base-content/80">
-                    <span className="material-symbols-outlined text-secondary text-base">check_circle</span>
-                    Acceso a grupos abiertos
-                  </li>
-                </ul>
-              </div>
-              <Link
-                href="/muro"
-                onClick={(e) => createRipple(e, e.currentTarget)}
-                className="w-full py-3 rounded-full bg-primary text-primary-content font-bold shadow-md hover:bg-primary/95 text-center text-sm"
-              >
-                Comenzar ahora
-              </Link>
-            </div>
-
-            {/* Plan Premium */}
-            <div className="bg-primary/10 text-primary p-8 rounded-[2rem] border border-primary/20 flex flex-col justify-between relative overflow-hidden z-10 hover:shadow-lg transition-all scale-105">
-              <div className="absolute top-4 right-6 bg-secondary text-on-secondary px-3 py-1 rounded-full text-[9px] font-bold uppercase tracking-wider">
-                Recomendado
-              </div>
-              <div>
-                <h3 className="font-display text-xl md:text-2xl mb-2 text-primary">Plan Premium</h3>
-                <p className="text-xs text-base-content/70 mb-6">Conexión más profunda</p>
-                <div className="text-3xl md:text-4xl font-display mb-8">
-                  $3.99 <span className="text-xs opacity-80">/ mes</span>
-                </div>
-                <ul className="space-y-4 mb-10 text-sm">
-                  <li className="flex items-center gap-3 text-base-content/90">
-                    <span className="material-symbols-outlined text-secondary text-base">check_circle</span>
-                    Peticiones privadas ilimitadas
-                  </li>
-                  <li className="flex items-center gap-3 text-base-content/90">
-                    <span className="material-symbols-outlined text-secondary text-base">check_circle</span>
-                    Creación de grupos propios
-                  </li>
-                  <li className="flex items-center gap-3 text-base-content/90">
-                    <span className="material-symbols-outlined text-secondary text-base">check_circle</span>
-                    Historial completo de fe
-                  </li>
-                  <li className="flex items-center gap-3 text-base-content/90">
-                    <span className="material-symbols-outlined text-secondary text-base">check_circle</span>
-                    Insignia de benefactor
-                  </li>
-                </ul>
-              </div>
-              <Link
-                href="/apoyo"
-                onClick={(e) => createRipple(e, e.currentTarget)}
-                className="w-full py-3 rounded-full bg-primary text-primary-content font-bold shadow-md hover:bg-primary/95 text-center text-sm"
-              >
-                Obtener Premium
-              </Link>
-            </div>
-
-            {/* Plan Iglesias */}
-            <div className="bg-base-200/50 p-8 rounded-[2rem] border border-base-content/5 flex flex-col justify-between hover:shadow-lg transition-shadow">
-              <div>
-                <h3 className="font-display text-xl md:text-2xl text-primary mb-2">Plan Iglesias</h3>
-                <p className="text-xs text-base-content/70 mb-6">Para comunidades</p>
-                <div className="text-3xl md:text-4xl font-display text-base-content mb-8">
-                  $29.99 <span className="text-xs opacity-80">/ mes</span>
-                </div>
-                <ul className="space-y-4 mb-10 text-sm">
-                  <li className="flex items-center gap-3 text-base-content/80">
-                    <span className="material-symbols-outlined text-secondary text-base">check_circle</span>
-                    Espacio propio para la iglesia
-                  </li>
-                  <li className="flex items-center gap-3 text-base-content/80">
-                    <span className="material-symbols-outlined text-secondary text-base">check_circle</span>
-                    Muro privado y estadísticas
-                  </li>
-                  <li className="flex items-center gap-3 text-base-content/80">
-                    <span className="material-symbols-outlined text-secondary text-base">check_circle</span>
-                    Branding personalizado
-                  </li>
-                </ul>
-              </div>
-              <Link
-                href="/apoyo"
-                onClick={(e) => createRipple(e, e.currentTarget)}
-                className="w-full py-3 rounded-full bg-primary text-primary-content font-bold shadow-md hover:bg-primary/95 text-center text-sm"
-              >
-                Apoyar como Comunidad
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* Call to Action Section */}
       <section className="py-24 bg-secondary/5">

@@ -28,28 +28,33 @@ export const getSEOTags = ({
         : `https://${config.domainName}/`
     ),
 
+    // Static favicon and icons
+    icons: {
+      icon: "/icon.png",
+      shortcut: "/favicon.ico",
+      apple: "/apple-icon.png",
+    },
+
     openGraph: {
       title: openGraph?.title || config.appName,
       description: openGraph?.description || config.appDescription,
       url: openGraph?.url || `https://${config.domainName}/`,
       siteName: openGraph?.title || config.appName,
-      // If you add an opengraph-image.(jpg|jpeg|png|gif) image to the /app folder, you don't need the code below
-      // images: [
-      //   {
-      //     url: `https://${config.domainName}/share.png`,
-      //     width: 1200,
-      //     height: 660,
-      //   },
-      // ],
-      locale: "en_US",
+      images: [
+        {
+          url: "/opengraph-image.png",
+          width: 1200,
+          height: 630,
+        },
+      ],
+      locale: "es_MX",
       type: "website",
     },
 
     twitter: {
       title: openGraph?.title || config.appName,
       description: openGraph?.description || config.appDescription,
-      // If you add an twitter-image.(jpg|jpeg|png|gif) image to the /app folder, you don't need the code below
-      // images: [openGraph?.image || defaults.og.image],
+      images: ["/twitter-image.png"],
       card: "summary_large_image",
       creator: "@marc_louvion",
     },

@@ -37,7 +37,18 @@ export async function POST(req) {
 
     const user = await User.findById(session?.user?.id);
 
-        const { priceId, mode, successUrl, cancelUrl, metadata } = body;
+    const { priceId, mode, successUrl, cancelUrl, metadata } = body;
+
+    // Bypass payments in development or if Stripe keys are missing
+    const stripeEnabled = process.env.STRIPE_SECRET_KEY && process.env.STRIPE_SECRET_KEY.startsWith("sk_");
+    if (!stripeEnabled || process.env.NODE_ENV === "development") {
+      if (user) {
+        user.priceId = priceId;
+        user.hasAccess = true;
+        await user.save();
+      }
+      return NextResponse.json({ url: successUrl });
+    }
 
     const stripeSessionURL = await createCheckout({
       priceId,

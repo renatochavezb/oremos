@@ -1,0 +1,16 @@
+feat: auth gates, prayer history, delete own prayers, static assets & HMR stability fixes
+
+- Enforce login gate on /nueva-peticion (redirect to sign-in when unauthenticated)
+- Enforce server-side auth in POST /api/prayers and POST /api/prayers/[id]/amen
+- Add DELETE /api/prayers/[id] endpoint with ownership verification
+- Add delete button (trash icon) for own prayers in /muro and /comunidad
+- Fix isOwner check in muro/page.js using .toString() on ObjectId
+- Add client-side auth gate in handleAmen (redirects to sign-in)
+- Bypass Stripe checkout in dev/missing-keys environment (auto-grants Premium)
+- Fix all API routes to import connectMongo from @/libs/mongoose (not @/libs/mongo)
+- Move static metadata assets (favicon, icons, og/twitter images) from app/ to public/
+- Update libs/seo.js to reference static /public paths for all icons and OG images
+- Fix HeaderBlog.js: replace @/app/icon.png import with static /icon.png path
+- Disable Webpack cache in dev mode in next.config.js to prevent HMR corruption on Windows
+- Add generated /public/atmosfera_paz.png image for nueva-peticion visual card
+- Remove Pricing section from landing page (home)

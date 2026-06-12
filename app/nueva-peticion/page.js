@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, Suspense } from "react";
-import { useSession } from "next-auth/react";
+import { useSession, signIn } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import Header from "@/components/Header";
@@ -57,6 +57,28 @@ function NewPrayerRequestContent() {
     };
   }, []);
 
+  // Sign in gate for guest users (moved below hooks to comply with React Hooks Rules)
+  if (status === "unauthenticated") {
+    return (
+      <section className="max-w-4xl mx-auto px-6 py-24 text-center font-sans min-h-[60vh] flex items-center justify-center">
+        <div className="bg-base-100 rounded-3xl p-12 shadow-sm border border-base-content/5 max-w-xl mx-auto">
+          <span className="material-symbols-outlined text-[64px] text-primary mb-6">lock_open</span>
+          <h2 className="font-display text-3xl text-primary mb-4 font-medium">Comparte tu Petición</h2>
+          <p className="text-base-content/70 text-sm mb-8 leading-relaxed">
+            Inicia sesión para publicar tu petición de oración y permitir que toda la comunidad ore contigo.
+          </p>
+          <button
+            onClick={() => signIn(undefined, { callbackUrl: "/nueva-peticion" })}
+            className="bg-primary text-primary-content hover:bg-primary/95 px-8 py-3 rounded-full font-bold shadow-md cursor-pointer inline-flex items-center gap-2"
+          >
+            <span className="material-symbols-outlined text-lg">login</span>
+            Iniciar Sesión
+          </button>
+        </div>
+      </section>
+    );
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -88,7 +110,7 @@ function NewPrayerRequestContent() {
 
   const handlePremiumCheck = (type) => {
     if (status !== "authenticated") {
-      toast.error("Debes iniciar sesión para usar funciones Premium");
+      toast.error(`Debes iniciar sesión para usar funciones Premium (${type === "groups" ? "Grupos Privados" : "Privadas Ilimitadas"})`);
       return;
     }
     setIsPublic(false);
@@ -118,7 +140,7 @@ function NewPrayerRequestContent() {
               <img
                 alt="Atmósfera de paz"
                 className="w-full h-full object-cover opacity-80"
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXCxn9tG3wIi5NfNLw4btV_80C4OtRjNzLjUsOH6QITzd4mNQ2uxbOmNRni8P_mem2kPscuL_lIYfK3QDXAa7MoagSSFuUEJBkAz7XRn68L1oGriE_AfyebFv_E1h9U2mQnM8dQlug8BmMMSK8qbo03NZw7UsOY-pgZQb2EDRUqYJ6UFkMr9SBHsthdXn7rRA28lp-AMhjpOqNTASiHnAvZGjuZgxAFo0QXH5Tb9EaJ0kE_6aHy5IqDyRJyS7rMgDyK8i_QDOy78eTE"
+                src="/atmosfera_paz.png"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-primary/40 to-transparent"></div>
               <div className="absolute bottom-8 left-8 right-8 text-white">
