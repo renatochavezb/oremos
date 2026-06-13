@@ -26,6 +26,10 @@ const prayerRequestSchema = mongoose.Schema(
       type: Boolean,
       default: true,
     },
+    group: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "PrivateGroup",
+    },
     prayersCount: {
       type: Number,
       default: 0,
@@ -34,6 +38,19 @@ const prayerRequestSchema = mongoose.Schema(
       type: Number,
       default: 0,
     },
+    candles: [
+      {
+        user: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "User",
+          required: true,
+        },
+        expiresAt: {
+          type: Date,
+          required: true,
+        },
+      },
+    ],
     candlesExpiry: [
       {
         type: Date,

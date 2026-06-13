@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import { auth } from "@/libs/auth";
 import connectMongo from "@/libs/mongoose";
 import { canAccessPrivateWall } from "@/libs/roles";
+import { isGroupMember } from "@/libs/privateGroups";
+import PrivateGroup from "@/models/PrivateGroup";
 import PrayerRequest from "@/models/PrayerRequest";
 import User from "@/models/User";
 
@@ -22,11 +24,27 @@ export async function POST(req, { params }) {
       return NextResponse.json({ error: "Petición no encontrada" }, { status: 404 });
     }
 
-    if (!prayer.isPublic && !canAccessPrivateWall(session.user.role)) {
-      return NextResponse.json(
-        { error: "Esta petición es confidencial y solo puede ser atendida por el equipo de intercesión" },
-        { status: 403 }
-      );
+    if (!prayer.isPublic) {
+      if (prayer.group) {
+        const group = await PrivateGroup.findById(prayer.group);
+        const isMember = isGroupMember(
+          group,
+          session.user.id,
+          session.user.email
+        );
+
+        if (!isMember && !canAccessPrivateWall(session.user.role)) {
+          return NextResponse.json(
+            { error: "Esta petición es privada de un grupo al que no perteneces" },
+            { status: 403 }
+          );
+        }
+      } else if (!canAccessPrivateWall(session.user.role)) {
+        return NextResponse.json(
+          { error: "Esta petición es confidencial y solo puede ser atendida por el equipo de intercesión" },
+          { status: 403 }
+        );
+      }
     }
 
     if (session?.user) {

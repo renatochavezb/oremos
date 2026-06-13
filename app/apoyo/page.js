@@ -103,7 +103,7 @@ function SupportContent() {
       }, 2000);
     } catch (error) {
       console.error("Error purchasing candle:", error);
-      toast.error("Error al encender la vela digital");
+      toast.error(error.response?.data?.error || "Error al encender la vela digital");
     } finally {
       setSubmittingCandle(false);
     }

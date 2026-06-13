@@ -123,6 +123,14 @@ export default function Muro() {
   };
 
   const handleIgniteCandle = async (id) => {
+    if (!session) {
+      toast.error("Debes iniciar sesión para encender una vela");
+      setTimeout(() => {
+        signIn(undefined, { callbackUrl: `/apoyo?prayerId=${id}` });
+      }, 1000);
+      return;
+    }
+
     toast.success("Redirigiendo para encender una Vela Digital...");
     setTimeout(() => {
       window.location.href = `/apoyo?prayerId=${id}`;
@@ -309,11 +317,13 @@ export default function Muro() {
                         <span>{prayer.prayersCount || 0} orando</span>
                       </div>
                       
-                      {prayer.hasActiveCandle ? (
+                      {prayer.hasUserLitCandle ? (
                         <span className="flex items-center gap-1 text-amber-600 font-bold">
                           <span className="material-symbols-outlined text-sm candle-glow candle-flicker">light_mode</span>
-                          Vela Encendida
+                          Tu vela brilla
                         </span>
+                      ) : isOwner ? (
+                        <span className="text-base-content/40 italic">Tu petición</span>
                       ) : (
                         <button
                           onClick={(e) => {

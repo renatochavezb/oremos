@@ -22,14 +22,38 @@ function NewPrayerRequestContent() {
   const [name, setName] = useState("");
   const [activeCategory, setActiveCategory] = useState("Otros");
   const [text, setText] = useState("");
-  const [isPublic, setIsPublic] = useState(true);
+  const [privacyMode, setPrivacyMode] = useState("public"); // public | group | private
+  const [selectedGroupId, setSelectedGroupId] = useState("");
+  const [privateGroups, setPrivateGroups] = useState([]);
   const [submitting, setSubmitting] = useState(false);
 
-  // Set privacy from query param if redirected from Private CTA
   useEffect(() => {
+    if (!session) return;
+
+    const loadGroups = async () => {
+      try {
+        const response = await axios.get("/api/groups/private");
+        setPrivateGroups(response.data.groups || []);
+      } catch (error) {
+        console.error("Error loading private groups:", error);
+      }
+    };
+
+    loadGroups();
+  }, [session]);
+
+  // Set privacy from query params
+  useEffect(() => {
+    if (!session) return;
+
     const isPrivateParam = searchParams.get("private");
-    if (isPrivateParam === "true" && session) {
-      setIsPublic(false);
+    const groupParam = searchParams.get("group");
+
+    if (groupParam) {
+      setPrivacyMode("group");
+      setSelectedGroupId(groupParam);
+    } else if (isPrivateParam === "true") {
+      setPrivacyMode("private");
     }
   }, [searchParams, session]);
 
@@ -94,19 +118,28 @@ function NewPrayerRequestContent() {
       return;
     }
 
+    if (privacyMode === "group" && !selectedGroupId) {
+      toast.error("Selecciona un grupo privado o crea uno en Grupos Privados");
+      return;
+    }
+
     setSubmitting(true);
     try {
       const isAnonymous = name.trim() === "";
       await axios.post("/api/prayers", {
         text,
         category: activeCategory,
-        isPublic,
+        isPublic: privacyMode === "public",
         isAnonymous,
+        groupId: privacyMode === "group" ? selectedGroupId : undefined,
       });
 
-      if (isPublic) {
+      if (privacyMode === "public") {
         toast.success("Tu petición ha sido compartida. La paz sea contigo.");
         router.push("/muro");
+      } else if (privacyMode === "group") {
+        toast.success("Tu petición fue compartida con tu círculo privado.");
+        router.push(`/grupos-privados`);
       } else {
         toast.success(
           "Tu petición confidencial fue recibida. Nuestro equipo de intercesión orará por ti."
@@ -131,7 +164,21 @@ function NewPrayerRequestContent() {
       toast.error(`Debes iniciar sesión para usar funciones Premium (${type === "groups" ? "Grupos Privados" : "Privadas Ilimitadas"})`);
       return;
     }
-    setIsPublic(false);
+
+    if (type === "groups") {
+      if (privateGroups.length === 0) {
+        toast.error("Primero crea un grupo e invita contactos");
+        router.push("/grupos-privados");
+        return;
+      }
+      setPrivacyMode("group");
+      if (!selectedGroupId) {
+        setSelectedGroupId(privateGroups[0].id);
+      }
+      return;
+    }
+
+    setPrivacyMode("private");
   };
 
   return (
@@ -181,10 +228,10 @@ function NewPrayerRequestContent() {
           <div className="lg:col-span-8">
             <div
               className={`shadow-sm hover:shadow-md border rounded-3xl p-8 md:p-12 transition-all duration-300 ${
-                isPublic ? "bg-base-100 border-base-content/5" : "prayer-form-private"
+                privacyMode === "public" ? "bg-base-100 border-base-content/5" : "prayer-form-private"
               }`}
             >
-              {!isPublic && (
+              {privacyMode === "private" && (
                 <div className="mb-8 p-4 rounded-2xl prayer-private-notice flex items-start gap-3">
                   <span className="material-symbols-outlined text-secondary text-xl mt-0.5">lock</span>
                   <div>
@@ -193,6 +240,38 @@ function NewPrayerRequestContent() {
                     </div>
                     <p className="text-sm text-base-content/75 leading-relaxed">
                       Esta petición será confidencial. Solo nuestro equipo de intercesión la recibirá; no aparecerá en el muro público.
+                    </p>
+                  </div>
+                </div>
+              )}
+
+              {privacyMode === "group" && (
+                <div className="mb-8 p-4 rounded-2xl bg-secondary/5 border border-secondary/15 flex items-start gap-3">
+                  <span className="material-symbols-outlined text-secondary text-xl mt-0.5">groups</span>
+                  <div className="flex-1">
+                    <p className="text-sm font-bold text-base-content mb-3">Compartir con tu círculo privado</p>
+                    {privateGroups.length === 0 ? (
+                      <Link href="/grupos-privados" className="text-sm text-primary font-bold underline">
+                        Crea un grupo e invita contactos
+                      </Link>
+                    ) : (
+                      <select
+                        value={selectedGroupId}
+                        onChange={(e) => setSelectedGroupId(e.target.value)}
+                        className="select select-bordered select-sm w-full max-w-md"
+                      >
+                        {privateGroups.map((group) => (
+                          <option key={group.id} value={group.id}>
+                            {group.name}
+                          </option>
+                        ))}
+                      </select>
+                    )}
+                    <p className="text-xs text-base-content/60 mt-2">
+                      Solo los miembros invitados verán esta petición.{" "}
+                      <Link href="/grupos-privados" className="text-primary font-semibold underline">
+                        Gestionar grupos
+                      </Link>
                     </p>
                   </div>
                 </div>
@@ -272,8 +351,8 @@ function NewPrayerRequestContent() {
                     {/* Public Option */}
                     <label className="relative flex items-center p-5 rounded-2xl border border-primary/20 bg-primary/5 cursor-pointer hover:bg-primary/10 transition-colors group">
                       <input
-                        checked={isPublic}
-                        onChange={() => setIsPublic(true)}
+                        checked={privacyMode === "public"}
+                        onChange={() => setPrivacyMode("public")}
                         className="radio radio-primary radio-sm mr-4"
                         name="privacy"
                         type="radio"
@@ -296,14 +375,14 @@ function NewPrayerRequestContent() {
                           handlePremiumCheck("groups");
                         }}
                         className={`relative flex items-center p-5 rounded-2xl border transition-colors cursor-pointer group ${
-                          !isPublic
+                          privacyMode === "group"
                             ? "border-secondary/20 bg-secondary/5"
                             : "border-base-content/10 bg-base-200/40 opacity-70 hover:opacity-100"
                         }`}
                       >
                         <input
-                          checked={!isPublic}
-                          onChange={() => setIsPublic(false)}
+                          checked={privacyMode === "group"}
+                          onChange={() => handlePremiumCheck("groups")}
                           className="radio radio-secondary radio-sm mr-4"
                           name="privacy"
                           type="radio"
@@ -329,14 +408,14 @@ function NewPrayerRequestContent() {
                           handlePremiumCheck("private");
                         }}
                         className={`relative flex items-center p-5 rounded-2xl border transition-colors cursor-pointer group ${
-                          !isPublic
+                          privacyMode === "private"
                             ? "border-secondary/20 bg-secondary/5"
                             : "border-base-content/10 bg-base-200/40 opacity-70 hover:opacity-100"
                         }`}
                       >
                         <input
-                          checked={!isPublic}
-                          onChange={() => setIsPublic(false)}
+                          checked={privacyMode === "private"}
+                          onChange={() => handlePremiumCheck("private")}
                           className="radio radio-secondary radio-sm mr-4"
                           name="privacy"
                           type="radio"

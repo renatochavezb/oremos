@@ -33,7 +33,10 @@ export async function GET(req) {
     const { searchParams } = new URL(req.url);
     const category = searchParams.get("category");
 
-    const query = { isPublic: false };
+    const query = {
+      isPublic: false,
+      $or: [{ group: { $exists: false } }, { group: null }],
+    };
     if (category && category !== "Todas las Peticiones" && category !== "Todas") {
       query.category = category;
     }

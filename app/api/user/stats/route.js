@@ -1,8 +1,10 @@
 import { NextResponse } from "next/server";
 import { auth } from "@/libs/auth";
 import connectMongo from "@/libs/mongoose";
+import { getDbErrorMessage } from "@/libs/dbError";
 import User from "@/models/User";
 import PrayerRequest from "@/models/PrayerRequest";
+import { mapPrayerCandleFields } from "@/libs/candles";
 
 // GET /api/user/stats - Fetch user streak, joined prayers, and active chains
 export async function GET() {
@@ -38,14 +40,11 @@ export async function GET() {
     // Process lists to include candle state indicators
     const now = new Date();
     const mapCandleState = (p) => {
-      const activeCandles = p.candlesExpiry
-        ? p.candlesExpiry.filter((expiry) => new Date(expiry) > now)
-        : [];
+      const candleFields = mapPrayerCandleFields(p, user._id.toString(), now);
       return {
         ...p,
         id: p._id.toString(),
-        activeCandlesCount: activeCandles.length,
-        hasActiveCandle: activeCandles.length > 0,
+        ...candleFields,
       };
     };
 
@@ -59,6 +58,6 @@ export async function GET() {
     });
   } catch (error) {
     console.error("Error in GET /api/user/stats:", error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    return NextResponse.json({ error: getDbErrorMessage(error) }, { status: 500 });
   }
 }

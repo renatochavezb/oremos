@@ -6,12 +6,15 @@ import config from "@/config"
 import connectMongo from "./mongo"
 import connectMongoose from "./mongoose"
 import User from "@/models/User"
+import PrivateGroup from "@/models/PrivateGroup"
 import { incrementDailyLogins } from "./dailyStats"
+import { isGroupMember } from "./privateGroups"
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   
   // Set any random key in .env.local
   secret: process.env.NEXTAUTH_SECRET,
+  trustHost: true,
   
   // Add EmailProvider only for server-side usage (not edge-compatible)
   providers: [
@@ -93,10 +96,10 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       return session;
     },
     async signIn({ user, account, profile }) {
+      const email = user.email?.toLowerCase();
+
       try {
         await connectMongoose();
-
-        const email = user.email?.toLowerCase();
         const adminEmails = (process.env.ADMIN_EMAILS || "")
           .split(",")
           .map((e) => e.trim().toLowerCase())
@@ -130,6 +133,30 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         await incrementDailyLogins();
       } catch (error) {
         console.error("Error incrementing daily logins:", error);
+      }
+
+      if (email && user.id) {
+        try {
+          const pendingGroups = await PrivateGroup.find({
+            "pendingInvites.email": email,
+          });
+
+          for (const group of pendingGroups) {
+            if (!isGroupMember(group, user.id, email)) {
+              group.members.push({
+                user: user.id,
+                email,
+                role: "member",
+              });
+            }
+            group.pendingInvites = group.pendingInvites.filter(
+              (invite) => invite.email !== email
+            );
+            await group.save();
+          }
+        } catch (error) {
+          console.error("Error accepting pending group invites:", error);
+        }
       }
 
       return true;

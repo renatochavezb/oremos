@@ -6,6 +6,11 @@ import configFile from "@/config";
 import User from "@/models/User";
 import PrayerRequest from "@/models/PrayerRequest";
 import { findCheckoutSession } from "@/libs/stripe";
+import {
+  getCandleExpiryDate,
+  getPrayerOwnerId,
+  hasUserActiveCandle,
+} from "@/libs/candles";
 
 // Initialize Stripe only if the secret key is available
 const stripe = process.env.STRIPE_SECRET_KEY ? new Stripe(process.env.STRIPE_SECRET_KEY) : null;
@@ -59,14 +64,19 @@ export async function POST(req) {
         const prayerId = data.object.metadata?.prayerId;
         if (prayerId) {
           const prayer = await PrayerRequest.findById(prayerId);
-          if (prayer) {
-            const expiryDate = new Date(new Date().getTime() + 24 * 60 * 60 * 1000); // 24 hours expiry
-            if (!prayer.candlesExpiry) {
-              prayer.candlesExpiry = [];
+          if (prayer && userId) {
+            if (
+              !hasUserActiveCandle(prayer, userId) &&
+              getPrayerOwnerId(prayer) !== userId
+            ) {
+              const expiryDate = getCandleExpiryDate();
+              if (!prayer.candles) {
+                prayer.candles = [];
+              }
+              prayer.candles.push({ user: userId, expiresAt: expiryDate });
+              prayer.candlesCount = (prayer.candlesCount || 0) + 1;
+              await prayer.save();
             }
-            prayer.candlesExpiry.push(expiryDate);
-            prayer.candlesCount = (prayer.candlesCount || 0) + 1;
-            await prayer.save();
           }
           break;
         }

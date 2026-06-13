@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import { auth } from "@/libs/auth";
 import connectMongo from "@/libs/mongoose";
 import { getDbErrorMessage } from "@/libs/dbError";
+import { mapPrayerCandleFields } from "@/libs/candles";
+import { getGroupIfMember } from "@/libs/privateGroups";
 import PrayerRequest from "@/models/PrayerRequest";
 import User from "@/models/User";
 
@@ -33,18 +35,17 @@ export async function GET(req) {
       .lean();
 
     const now = new Date();
+    const userId = session?.user?.id;
 
     // Map to include active candle status, count and user intercession status
     const processedPrayers = prayers.map((p) => {
-      const activeCandles = p.candlesExpiry
-        ? p.candlesExpiry.filter((expiry) => new Date(expiry) > now)
-        : [];
       const prayerIdStr = p._id.toString();
+      const candleFields = mapPrayerCandleFields(p, userId, now);
+
       return {
         ...p,
         id: prayerIdStr,
-        activeCandlesCount: activeCandles.length,
-        hasActiveCandle: activeCandles.length > 0,
+        ...candleFields,
         hasUserPrayed: userPrayedIds.includes(prayerIdStr),
       };
     });
@@ -73,7 +74,7 @@ export async function POST(req) {
     await connectMongo();
 
     const body = await req.json();
-    const { text, category, isPublic, isAnonymous } = body;
+    const { text, category, isPublic, isAnonymous, groupId } = body;
 
     if (!text || text.trim() === "") {
       return NextResponse.json({ error: "El texto de la petición es requerido" }, { status: 400 });
@@ -94,14 +95,32 @@ export async function POST(req) {
       return NextResponse.json({ error: "Debes iniciar sesión para publicar peticiones privadas" }, { status: 401 });
     }
 
+    let group = null;
+    if (groupId) {
+      group = await getGroupIfMember(
+        groupId,
+        session.user.id,
+        session.user.email
+      );
+
+      if (!group) {
+        return NextResponse.json(
+          { error: "No tienes acceso a ese grupo privado" },
+          { status: 403 }
+        );
+      }
+    }
+
     const newPrayer = await PrayerRequest.create({
       user: userId,
       userName: displayName,
       category: category || "Otros",
       text: text,
-      isPublic: isPublic !== false,
+      isPublic: group ? false : isPublic !== false,
+      group: group?._id,
       prayersCount: 0,
       candlesCount: 0,
+      candles: [],
       candlesExpiry: [],
     });
 

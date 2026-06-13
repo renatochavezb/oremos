@@ -92,7 +92,7 @@ export default function Comunidad() {
       { threshold: 0.05 }
     );
 
-    const elements = document.querySelectorAll("section, .grid > div, .bg-base-100");
+    const elements = document.querySelectorAll("main > section");
     elements.forEach((el) => {
       el.classList.add("transition-all", "duration-700", "opacity-0", "translate-y-4");
       observer.observe(el);
@@ -403,8 +403,8 @@ export default function Comunidad() {
                       Únete a un grupo que resuene con tu camino. Las caminatas espirituales compartidas crean vínculos más profundos y paz duradera.
                     </p>
                   </div>
-                  <Link href="/muro" className="px-8 py-3 bg-primary text-primary-content hover:bg-primary/95 rounded-full text-xs font-bold shadow-md text-center">
-                    Explorar Muro
+                  <Link href="/grupos-privados" className="px-8 py-3 bg-secondary text-secondary-content hover:bg-secondary/95 rounded-full text-xs font-bold shadow-md text-center">
+                    Grupos Privados
                   </Link>
                 </div>
                 
