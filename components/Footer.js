@@ -1,5 +1,6 @@
 import Link from "next/link";
 import config from "@/config";
+import BrandLogo from "./BrandLogo";
 
 const Footer = () => {
   return (
@@ -7,7 +8,9 @@ const Footer = () => {
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
           <div className="col-span-1 md:col-span-2">
-            <div className="font-display text-2xl text-primary mb-4 italic">Oremos</div>
+            <div className="mb-6">
+              <BrandLogo showLink={false} size="md" />
+            </div>
             <p className="text-base-content/85 text-sm italic max-w-sm mb-6">
               &ldquo;Llevad los unos las cargas de los otros, y cumplid así la ley de Cristo.&rdquo;
             </p>

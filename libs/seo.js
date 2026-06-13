@@ -30,8 +30,13 @@ export const getSEOTags = ({
 
     // Static favicon and icons
     icons: {
-      icon: "/icon.png",
-      shortcut: "/favicon.ico",
+      icon: [
+        { url: "/brand/oremos-favicon-16.png", sizes: "16x16", type: "image/png" },
+        { url: "/brand/oremos-favicon-32.png", sizes: "32x32", type: "image/png" },
+        { url: "/brand/oremos-favicon-48.png", sizes: "48x48", type: "image/png" },
+        { url: "/brand/oremos-favicon.png", sizes: "512x512", type: "image/png" },
+      ],
+      shortcut: "/brand/oremos-favicon-32.png",
       apple: "/apple-icon.png",
     },
 
@@ -86,7 +91,7 @@ export const renderSchemaTags = () => {
           "@type": "SoftwareApplication",
           name: config.appName,
           description: config.appDescription,
-          image: `https://${config.domainName}/icon.png`,
+          image: `https://${config.domainName}/brand/oremos-favicon.png`,
           url: `https://${config.domainName}/`,
           author: {
             "@type": "Person",

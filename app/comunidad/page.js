@@ -42,7 +42,10 @@ export default function Comunidad() {
   const { data: session, status } = useSession();
   
   // Stats states
-  const [globalStats, setGlobalStats] = useState({ globalPrayersToday: 12842, livesTouched: 84103 });
+  const [globalStats, setGlobalStats] = useState({
+    loginsToday: 0,
+    communityImpact: 0,
+  });
   const [userStats, setUserStats] = useState({
     streak: 0,
     joinedCount: 0,
@@ -197,20 +200,20 @@ export default function Comunidad() {
             {/* Stats Metrics Grid */}
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-20 items-stretch">
               <div className="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-8">
-                {/* Global Prayers */}
+                {/* Daily logins */}
                 <div className="bg-base-100 rounded-2xl p-8 flex flex-col justify-between min-h-[180px] border border-base-content/5 hover:shadow-md transition-all">
                   <div className="flex justify-between items-start">
                     <div className="w-10 h-10 rounded-full bg-primary/5 flex items-center justify-center text-primary">
-                      <span className="material-symbols-outlined">public</span>
+                      <span className="material-symbols-outlined">login</span>
                     </div>
                     <span className="bg-primary/10 text-primary text-[9px] px-3 py-1 rounded-full font-bold uppercase tracking-wider">
-                      En Vivo
+                      Hoy
                     </span>
                   </div>
                   <div>
-                    <p className="text-xs text-base-content/60 mb-1 font-semibold">Oraciones globales hoy</p>
+                    <p className="text-xs text-base-content/60 mb-1 font-semibold">Ingresos totales del día</p>
                     <h3 className="text-3xl font-display font-medium text-primary">
-                      {globalStats.globalPrayersToday.toLocaleString()}
+                      {globalStats.loginsToday.toLocaleString()}
                     </h3>
                   </div>
                 </div>
@@ -223,7 +226,7 @@ export default function Comunidad() {
                   <div>
                     <p className="text-xs text-base-content/60 mb-1 font-semibold">Vidas tocadas</p>
                     <h3 className="text-3xl font-display font-medium text-secondary">
-                      {globalStats.livesTouched.toLocaleString()}
+                      {globalStats.communityImpact.toLocaleString()}
                     </h3>
                   </div>
                 </div>

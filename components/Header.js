@@ -6,6 +6,7 @@ import { useSession } from "next-auth/react";
 import { canAccessPrivateWall } from "@/libs/roles";
 import ButtonAccount from "./ButtonAccount";
 import ButtonSignin from "./ButtonSignin";
+import BrandLogo from "./BrandLogo";
 
 const Header = () => {
   const pathname = usePathname();
@@ -25,10 +26,8 @@ const Header = () => {
     <>
       {/* Desktop Navigation Header */}
       <nav className="bg-base-100/70 backdrop-blur-md sticky top-0 z-[100] border-b border-base-content/5">
-        <div className="flex justify-between items-center w-full px-6 md:px-12 py-4 max-w-7xl mx-auto h-20">
-          <Link href="/" className="font-display text-2xl text-primary font-medium tracking-tight hover:opacity-90 transition-opacity">
-            Oremos
-          </Link>
+        <div className="flex justify-between items-center w-full px-6 md:px-12 py-3 max-w-7xl mx-auto min-h-[5.5rem]">
+          <BrandLogo size="lg" />
           
           {/* Desktop Nav Items */}
           <div className="hidden md:flex items-center gap-8 font-sans">

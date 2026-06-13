@@ -75,9 +75,15 @@ const config = {
     // OR you can just do this to use a custom color: main: "#f37055". HEX only.
     main: "#3d5f7c", // Uses the primary color of Oremos
   },
+  brand: {
+    icon: "/brand/oremos-favicon.png",
+    iconMark: "/brand/oremos-icon-mark.png",
+    wordmark: "/brand/oremos-wordmark.png",
+    logo: "/logoAndName.png",
+  },
   auth: {
     // REQUIRED — the path to log in users. It's use to protect private routes (like /dashboard). It's used in apiClient (/libs/api.js) upon 401 errors from our API
-    loginUrl: "/api/auth/signin",
+    loginUrl: "/auth/signin",
     callbackUrl: "/comunidad",
   },
 };

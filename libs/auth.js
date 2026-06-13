@@ -6,6 +6,7 @@ import config from "@/config"
 import connectMongo from "./mongo"
 import connectMongoose from "./mongoose"
 import User from "@/models/User"
+import { incrementDailyLogins } from "./dailyStats"
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   
@@ -124,6 +125,13 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       } catch (error) {
         console.error("Error setting user role on sign in:", error);
       }
+
+      try {
+        await incrementDailyLogins();
+      } catch (error) {
+        console.error("Error incrementing daily logins:", error);
+      }
+
       return true;
     },
   },
@@ -145,10 +153,14 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   session: {
     strategy: "jwt",
   },
+  pages: {
+    signIn: "/auth/signin",
+    verifyRequest: "/auth/verify-request",
+  },
   theme: {
     brandColor: config.colors.main,
     // Add you own logo below. Recommended size is rectangle (i.e. 200x50px) and show your logo + name.
     // It will be used in the login flow to display your logo. If you don't add it, it will look faded.
-    logo: `https://${config.domainName}/logoAndName.png`,
+    logo: `https://${config.domainName}${config.brand.logo}`,
   },
 }); 
