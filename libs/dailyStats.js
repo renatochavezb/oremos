@@ -29,3 +29,13 @@ export async function getTodayLoginCount() {
   const stats = await DailyStats.findOne({ date }).lean();
   return stats?.loginCount || 0;
 }
+
+export async function getTotalLoginCount() {
+  await connectMongo();
+
+  const result = await DailyStats.aggregate([
+    { $group: { _id: null, total: { $sum: "$loginCount" } } },
+  ]);
+
+  return result[0]?.total || 0;
+}
