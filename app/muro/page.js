@@ -9,6 +9,7 @@ import Footer from "@/components/Footer";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { createRipple } from "@/libs/ripple";
+import { ProximamenteButton } from "@/components/Proximamente";
 import { getPublicPrayerCardClasses } from "@/libs/prayerStyles";
 
 const categories = ["Todas las Peticiones", "Salud", "Paz", "Gratitud", "Familia", "Otros"];
@@ -207,14 +208,12 @@ export default function Muro() {
                 <p className="text-xs text-base-content/70">Comparte tu carga de forma confidencial con nuestro equipo de intercesión.</p>
               </div>
             </div>
-            <Link
-              href="/nueva-peticion?private=true"
-              onClick={(e) => createRipple(e, e.currentTarget)}
-              className="whitespace-nowrap px-6 py-3 bg-secondary text-on-secondary hover:bg-secondary/95 rounded-full text-xs font-bold shadow-md flex items-center gap-2"
+            <ProximamenteButton
+              variant="secondary"
+              icon={<span className="material-symbols-outlined text-sm">verified</span>}
             >
               Solicitar Oración Privada
-              <span className="material-symbols-outlined text-sm">verified</span>
-            </Link>
+            </ProximamenteButton>
           </div>
         </section>
 

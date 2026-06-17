@@ -8,6 +8,7 @@ import Footer from "@/components/Footer";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { createRipple } from "@/libs/ripple";
+import { ProximamenteButton } from "@/components/Proximamente";
 import { getPrivatePrayerCardClasses, getPublicPrayerCardClasses } from "@/libs/prayerStyles";
 import PrayerPrivacyBadge from "@/components/PrayerPrivacyBadge";
 
@@ -407,9 +408,9 @@ export default function Comunidad() {
                       Únete a un grupo que resuene con tu camino. Las caminatas espirituales compartidas crean vínculos más profundos y paz duradera.
                     </p>
                   </div>
-                  <Link href="/grupos-privados" className="px-8 py-3 bg-secondary text-secondary-content hover:bg-secondary/95 rounded-full text-xs font-bold shadow-md text-center">
+                  <ProximamenteButton variant="secondary" className="px-8">
                     Grupos Privados
-                  </Link>
+                  </ProximamenteButton>
                 </div>
                 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 font-sans">
@@ -428,17 +429,9 @@ export default function Comunidad() {
                           <span className="text-[10px] text-base-content/50 font-bold">
                             {(group.members + (isJoined ? 1 : 0)).toLocaleString()} Miembros
                           </span>
-                          <button
-                            onClick={(e) => {
-                              createRipple(e, e.currentTarget, isJoined ? "rgba(107, 85, 132, 0.2)" : "rgba(61, 95, 124, 0.2)");
-                              handleGroupToggle(group.id);
-                            }}
-                            className={`text-xs font-bold cursor-pointer hover:underline ${
-                              isJoined ? "text-secondary" : "text-primary"
-                            }`}
-                          >
-                            {isJoined ? "Salir del Grupo" : "Unirse al Grupo"}
-                          </button>
+                          <ProximamenteButton variant="link">
+                            Unirse al Grupo
+                          </ProximamenteButton>
                         </div>
                       </div>
                     );

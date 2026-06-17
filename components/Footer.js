@@ -1,6 +1,7 @@
 import Link from "next/link";
 import config from "@/config";
 import BrandLogo from "./BrandLogo";
+import { ProximamenteButton } from "./Proximamente";
 
 const Footer = () => {
   return (
@@ -19,9 +20,9 @@ const Footer = () => {
               <p className="text-xs text-base-content/70 mb-4 leading-relaxed">
                 Si Oremos te ha ayudado, considera apoyar la plataforma para mantenerla libre de publicidad y accesible para todos.
               </p>
-              <Link href="/apoyo" className="bg-primary text-primary-content hover:bg-primary-container px-6 py-2 rounded-full text-xs font-bold shadow-md inline-block">
+              <ProximamenteButton variant="primary" className="px-6 py-2">
                 Donar con Amor
-              </Link>
+              </ProximamenteButton>
             </div>
           </div>
           <div>

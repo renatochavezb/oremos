@@ -9,6 +9,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import config from "@/config";
 import { createRipple } from "@/libs/ripple";
+import { ProximamenteButton } from "@/components/Proximamente";
 
 function SupportContent() {
   const searchParams = useSearchParams();
@@ -190,22 +191,14 @@ function SupportContent() {
             </p>
 
             {/* Donation selection form */}
-            <form onSubmit={handleDonation} className="w-full mb-8">
+            <form onSubmit={(e) => e.preventDefault()} className="w-full mb-8 opacity-60 pointer-events-none">
               <div className="grid grid-cols-3 gap-3 mb-4">
                 {["5", "15", "50"].map((val) => (
                   <button
                     key={val}
                     type="button"
-                    onClick={(e) => {
-                      createRipple(e, e.currentTarget, "rgba(61, 95, 124, 0.2)");
-                      setDonationAmount(val);
-                      setCustomDonation("");
-                    }}
-                    className={`py-3 rounded-xl text-sm font-bold border transition-all cursor-pointer ${
-                      donationAmount === val && !customDonation
-                        ? "bg-primary text-primary-content border-primary"
-                        : "border-base-content/10 hover:bg-base-200/50"
-                    }`}
+                    disabled
+                    className="py-3 rounded-xl text-sm font-bold border border-base-content/10"
                   >
                     ${val} USD
                   </button>
@@ -214,25 +207,16 @@ function SupportContent() {
               <input
                 type="number"
                 placeholder="Otro monto (USD)"
-                value={customDonation}
-                onChange={(e) => setCustomDonation(e.target.value)}
+                disabled
                 className="input input-bordered w-full rounded-xl text-sm font-sans"
               />
-              <button
-                type="submit"
-                disabled={submittingDonation}
-                onClick={(e) => createRipple(e, e.currentTarget, "rgba(61, 95, 124, 0.4)")}
-                className="w-full bg-primary text-primary-content hover:bg-primary/95 py-3.5 rounded-full text-xs font-bold shadow-md cursor-pointer mt-6 flex items-center justify-center gap-2 uppercase tracking-wider"
+              <ProximamenteButton
+                variant="primary"
+                className="w-full mt-6 py-3.5 uppercase tracking-wider"
+                icon={<span className="material-symbols-outlined text-sm">volunteer_activism</span>}
               >
-                {submittingDonation ? (
-                  <span className="loading loading-spinner loading-xs"></span>
-                ) : (
-                  <>
-                    <span>Donar ahora</span>
-                    <span className="material-symbols-outlined text-sm">volunteer_activism</span>
-                  </>
-                )}
-              </button>
+                Donar ahora
+              </ProximamenteButton>
             </form>
           </div>
         </div>
@@ -343,16 +327,9 @@ function SupportContent() {
                 <span>Insignia de benefactor</span>
               </li>
             </ul>
-            <button
-              onClick={(e) => {
-                createRipple(e, e.currentTarget, "rgba(107, 85, 132, 0.4)");
-                handleCheckout(config.stripe.plans[0].priceId, "premium");
-              }}
-              disabled={submittingPremium}
-              className="w-full py-3 bg-secondary text-on-secondary rounded-full font-bold shadow-sm hover:opacity-95 transition-all text-xs cursor-pointer flex items-center justify-center"
-            >
-              {submittingPremium ? <span className="loading loading-spinner loading-xs"></span> : "Elegir Premium"}
-            </button>
+            <ProximamenteButton variant="outlineSecondary" className="w-full py-3">
+              Elegir Premium
+            </ProximamenteButton>
           </div>
 
           {/* Plan Iglesias */}
@@ -378,16 +355,9 @@ function SupportContent() {
                 <span>Branding personalizado</span>
               </li>
             </ul>
-            <button
-              onClick={(e) => {
-                createRipple(e, e.currentTarget, "rgba(61, 95, 124, 0.4)");
-                handleCheckout(config.stripe.plans[1].priceId, "church");
-              }}
-              disabled={submittingChurch}
-              className="w-full py-3 border-2 border-primary text-primary rounded-full font-bold hover:bg-primary/5 transition-all text-xs cursor-pointer flex items-center justify-center"
-            >
-              {submittingChurch ? <span className="loading loading-spinner loading-xs"></span> : "Saber más"}
-            </button>
+            <ProximamenteButton variant="outline" className="w-full py-3">
+              Saber más
+            </ProximamenteButton>
           </div>
         </div>
       </section>

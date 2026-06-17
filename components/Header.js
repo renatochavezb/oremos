@@ -7,6 +7,7 @@ import { canAccessPrivateWall } from "@/libs/roles";
 import ButtonAccount from "./ButtonAccount";
 import ButtonSignin from "./ButtonSignin";
 import BrandLogo from "./BrandLogo";
+import { ProximamenteButton } from "./Proximamente";
 
 const Header = () => {
   const pathname = usePathname();
@@ -14,8 +15,9 @@ const Header = () => {
 
   const links = [
     { href: "/", label: "Inicio", icon: "home" },
-    { href: "/muro", label: "Muro de Oración", icon: "rebase_edit" },
-    { href: "/nueva-peticion", label: "Nueva Petición", icon: "add_circle" },
+    { href: "/oraciones", label: "Oraciones", icon: "menu_book" },
+    { href: "/muro", label: "Muro", icon: "rebase_edit" },
+    { href: "/nueva-peticion", label: "Pedir", icon: "add_circle" },
     { href: "/comunidad", label: "Comunidad", icon: "group" },
     { href: "/apoyo", label: "Apoyo", icon: "volunteer_activism" },
   ];
@@ -58,13 +60,20 @@ const Header = () => {
                 <span className="hidden sm:inline">Muro Privado</span>
               </Link>
             )}
-            <Link
-              href="/apoyo"
-              className="hidden sm:flex items-center gap-1.5 px-4 py-2 text-secondary border border-secondary/30 rounded-full hover:bg-secondary/5 transition-colors font-sans text-xs font-semibold"
+            <ProximamenteButton
+              variant="header"
+              className="hidden sm:flex"
+              icon={
+                <span
+                  className="material-symbols-outlined text-[18px]"
+                  style={{ fontVariationSettings: "'FILL' 0" }}
+                >
+                  volunteer_activism
+                </span>
+              }
             >
-              <span className="material-symbols-outlined text-[18px]" style={{ fontVariationSettings: "'FILL' 0" }}>volunteer_activism</span>
               Donar
-            </Link>
+            </ProximamenteButton>
             {session ? (
               <ButtonAccount />
             ) : (

@@ -15,11 +15,19 @@ export const getSEOTags = ({
 } = {}) => {
   return {
     // up to 50 characters (what does your app do for the user?) > your main should be here
-    title: title || config.appName,
+    title: title || "Oremos — Comunidad de Oración en Español",
     // up to 160 characters (how does your app help the user?)
-    description: description || config.appDescription,
+    description:
+      description ||
+      "Pide oración, miles rezan por ti. Comunidad de oración católica en México y LatAm.",
     // some keywords separated by commas. by default it will be your app name
-    keywords: keywords || [config.appName],
+    keywords: keywords || [
+      "oración",
+      "orar",
+      "comunidad de oración",
+      "oraciones católicas",
+      "peticiones de oración",
+    ],
     applicationName: config.appName,
     // set a base URL prefix for other fields that require a fully qualified URL (.e.g og:image: og:image: 'https://yourdomain.com/share.png' => '/share.png')
     metadataBase: new URL(
@@ -41,10 +49,12 @@ export const getSEOTags = ({
     },
 
     openGraph: {
-      title: openGraph?.title || config.appName,
-      description: openGraph?.description || config.appDescription,
+      title: openGraph?.title || "Oremos — Comunidad de Oración en Español",
+      description:
+        openGraph?.description ||
+        "Pide oración, miles rezan por ti. Comunidad de oración católica en México y LatAm.",
       url: openGraph?.url || `https://${config.domainName}/`,
-      siteName: openGraph?.title || config.appName,
+      siteName: "Oremos",
       images: [
         {
           url: "/opengraph-image.png",
@@ -57,11 +67,12 @@ export const getSEOTags = ({
     },
 
     twitter: {
-      title: openGraph?.title || config.appName,
-      description: openGraph?.description || config.appDescription,
+      title: openGraph?.title || "Oremos — Comunidad de Oración en Español",
+      description:
+        openGraph?.description ||
+        "Pide oración, miles rezan por ti. Comunidad de oración católica en México y LatAm.",
       images: ["/twitter-image.png"],
       card: "summary_large_image",
-      creator: "@marc_louvion",
     },
 
     // If a canonical URL is given, we add it. The metadataBase will turn the relative URL into a fully qualified URL

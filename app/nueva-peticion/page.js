@@ -10,6 +10,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { createRipple } from "@/libs/ripple";
 import PrayerPrivacyBadge from "@/components/PrayerPrivacyBadge";
+import { ProximamenteBadge } from "@/components/Proximamente";
 
 const categories = ["Salud", "Paz", "Gratitud", "Familia", "Otros"];
 
@@ -42,20 +43,15 @@ function NewPrayerRequestContent() {
     loadGroups();
   }, [session]);
 
-  // Set privacy from query params
+  // Premium privacy modes are coming soon — ignore query params for private/group
   useEffect(() => {
-    if (!session) return;
-
     const isPrivateParam = searchParams.get("private");
     const groupParam = searchParams.get("group");
 
-    if (groupParam) {
-      setPrivacyMode("group");
-      setSelectedGroupId(groupParam);
-    } else if (isPrivateParam === "true") {
-      setPrivacyMode("private");
+    if (isPrivateParam === "true" || groupParam) {
+      setPrivacyMode("public");
     }
-  }, [searchParams, session]);
+  }, [searchParams]);
 
   // Scroll Reveal Observer
   useEffect(() => {
@@ -95,9 +91,7 @@ function NewPrayerRequestContent() {
           <button
             onClick={() =>
               signIn(undefined, {
-                callbackUrl: searchParams.get("private") === "true"
-                  ? "/nueva-peticion?private=true"
-                  : "/nueva-peticion",
+                callbackUrl: "/nueva-peticion",
               })
             }
             className="bg-primary text-primary-content hover:bg-primary/95 px-8 py-3 rounded-full font-bold shadow-md cursor-pointer inline-flex items-center gap-2"
@@ -157,28 +151,6 @@ function NewPrayerRequestContent() {
     } finally {
       setSubmitting(false);
     }
-  };
-
-  const handlePremiumCheck = (type) => {
-    if (status !== "authenticated") {
-      toast.error(`Debes iniciar sesión para usar funciones Premium (${type === "groups" ? "Grupos Privados" : "Privadas Ilimitadas"})`);
-      return;
-    }
-
-    if (type === "groups") {
-      if (privateGroups.length === 0) {
-        toast.error("Primero crea un grupo e invita contactos");
-        router.push("/grupos-privados");
-        return;
-      }
-      setPrivacyMode("group");
-      if (!selectedGroupId) {
-        setSelectedGroupId(privateGroups[0].id);
-      }
-      return;
-    }
-
-    setPrivacyMode("private");
   };
 
   return (
@@ -370,29 +342,22 @@ function NewPrayerRequestContent() {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       {/* Groups Option */}
                       <div
-                        onClick={(e) => {
-                          createRipple(e, e.currentTarget, "rgba(107, 85, 132, 0.2)");
-                          handlePremiumCheck("groups");
-                        }}
-                        className={`relative flex items-center p-5 rounded-2xl border transition-colors cursor-pointer group ${
-                          privacyMode === "group"
-                            ? "border-secondary/20 bg-secondary/5"
-                            : "border-base-content/10 bg-base-200/40 opacity-70 hover:opacity-100"
-                        }`}
+                        aria-disabled="true"
+                        className="relative flex items-center p-5 rounded-2xl border border-base-content/10 bg-base-200/40 opacity-60 cursor-not-allowed"
                       >
                         <input
-                          checked={privacyMode === "group"}
-                          onChange={() => handlePremiumCheck("groups")}
+                          disabled
                           className="radio radio-secondary radio-sm mr-4"
                           name="privacy"
                           type="radio"
                         />
                         <div className="flex flex-col">
-                          <div className="flex items-center gap-2">
+                          <div className="flex items-center gap-2 flex-wrap">
                             <span className="text-sm font-bold text-base-content font-sans">Grupos Privados</span>
                             <span className="bg-secondary/15 text-secondary text-[8px] px-1.5 py-0.5 rounded font-bold uppercase tracking-wider font-sans">
                               PREMIUM
                             </span>
+                            <ProximamenteBadge />
                           </div>
                           <span className="text-xs text-base-content/60 mt-0.5 font-sans">Solo para tus círculos</span>
                         </div>
@@ -403,29 +368,22 @@ function NewPrayerRequestContent() {
 
                       {/* Secret option */}
                       <div
-                        onClick={(e) => {
-                          createRipple(e, e.currentTarget, "rgba(107, 85, 132, 0.2)");
-                          handlePremiumCheck("private");
-                        }}
-                        className={`relative flex items-center p-5 rounded-2xl border transition-colors cursor-pointer group ${
-                          privacyMode === "private"
-                            ? "border-secondary/20 bg-secondary/5"
-                            : "border-base-content/10 bg-base-200/40 opacity-70 hover:opacity-100"
-                        }`}
+                        aria-disabled="true"
+                        className="relative flex items-center p-5 rounded-2xl border border-base-content/10 bg-base-200/40 opacity-60 cursor-not-allowed"
                       >
                         <input
-                          checked={privacyMode === "private"}
-                          onChange={() => handlePremiumCheck("private")}
+                          disabled
                           className="radio radio-secondary radio-sm mr-4"
                           name="privacy"
                           type="radio"
                         />
                         <div className="flex flex-col">
-                          <div className="flex items-center gap-2">
+                          <div className="flex items-center gap-2 flex-wrap">
                             <span className="text-sm font-bold text-base-content font-sans">Privadas Ilimitadas</span>
                             <span className="bg-secondary/15 text-secondary text-[8px] px-1.5 py-0.5 rounded font-bold uppercase tracking-wider font-sans">
                               PREMIUM
                             </span>
+                            <ProximamenteBadge />
                           </div>
                           <span className="text-xs text-base-content/60 mt-0.5 font-sans">Peticiones íntimas</span>
                         </div>
