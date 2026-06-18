@@ -9,6 +9,7 @@ import NextTopLoader from "nextjs-toploader";
 import { Toaster } from "react-hot-toast";
 import { Tooltip } from "react-tooltip";
 import config from "@/config";
+import PushNotificationManager from "./PushNotificationManager";
 
 // Crisp customer chat support:
 // This component is separated from ClientLayout because it needs to be wrapped with <SessionProvider> to use useSession() hook
@@ -76,6 +77,9 @@ const ClientLayout = ({ children }) => {
 
         {/* Set Crisp customer chat support */}
         <CrispChat />
+
+        {/* Web push: prompt + subscription for prayer support alerts */}
+        <PushNotificationManager />
       </SessionProvider>
     </>
   );

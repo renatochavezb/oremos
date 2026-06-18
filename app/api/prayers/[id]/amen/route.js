@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import { auth } from "@/libs/auth";
 import connectMongo from "@/libs/mongoose";
 import { canAccessPrivateWall } from "@/libs/roles";
+import { getPrayerOwnerId } from "@/libs/candles";
+import { notifyPrayerOwnerOfAmen } from "@/libs/pushNotifications";
 import { isGroupMember } from "@/libs/privateGroups";
 import PrivateGroup from "@/models/PrivateGroup";
 import PrayerRequest from "@/models/PrayerRequest";
@@ -88,6 +90,13 @@ export async function POST(req, { params }) {
     // Increment request intercession count
     prayer.prayersCount = (prayer.prayersCount || 0) + 1;
     await prayer.save();
+
+    notifyPrayerOwnerOfAmen({
+      ownerId: getPrayerOwnerId(prayer),
+      actorId: session.user.id,
+      prayerId: prayer._id.toString(),
+      prayersCount: prayer.prayersCount,
+    }).catch((error) => console.error("Push amen notification error:", error));
 
     return NextResponse.json({
       success: true,

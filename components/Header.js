@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useSession } from "next-auth/react";
-import { canAccessPrivateWall } from "@/libs/roles";
 import ButtonAccount from "./ButtonAccount";
 import ButtonSignin from "./ButtonSignin";
 import BrandLogo from "./BrandLogo";
@@ -21,8 +20,6 @@ const Header = () => {
     { href: "/comunidad", label: "Comunidad", icon: "group" },
     { href: "/apoyo", label: "Apoyo", icon: "volunteer_activism" },
   ];
-
-  const showPrivateWall = canAccessPrivateWall(session?.user?.role);
 
   return (
     <>
@@ -51,15 +48,6 @@ const Header = () => {
 
           {/* User Signin / Profile */}
           <div className="flex items-center gap-3">
-            {showPrivateWall && (
-              <Link
-                href="/muro-privado"
-                className="flex items-center gap-1.5 px-3 sm:px-4 py-2 text-primary border border-primary/30 rounded-full hover:bg-primary/5 transition-colors font-sans text-xs font-semibold"
-              >
-                <span className="material-symbols-outlined text-[18px]">lock</span>
-                <span className="hidden sm:inline">Muro Privado</span>
-              </Link>
-            )}
             <ProximamenteButton
               variant="header"
               className="hidden sm:flex"

@@ -8,6 +8,7 @@ import {
   hasUserActiveCandle,
   mapPrayerCandleFields,
 } from "@/libs/candles";
+import { notifyPrayerOwnerOfCandle } from "@/libs/pushNotifications";
 import PrayerRequest from "@/models/PrayerRequest";
 
 // POST /api/prayers/[id]/candle - Light a 24-hour candle on someone else's prayer
@@ -63,6 +64,12 @@ export async function POST(req, { params }) {
     });
     prayer.candlesCount = (prayer.candlesCount || 0) + 1;
     await prayer.save();
+
+    notifyPrayerOwnerOfCandle({
+      ownerId: getPrayerOwnerId(prayer),
+      actorId: session.user.id,
+      prayerId: prayer._id.toString(),
+    }).catch((error) => console.error("Push candle notification error:", error));
 
     const candleFields = mapPrayerCandleFields(prayer, session.user.id);
 
