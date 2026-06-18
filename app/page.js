@@ -114,7 +114,7 @@ export default function Page() {
               onClick={(e) => createRipple(e, e.currentTarget)}
               className="bg-primary text-primary-content hover:bg-primary-container px-10 py-4 rounded-full font-bold shadow-lg hover:scale-[1.02] transition-all duration-300 flex items-center gap-2 w-full sm:w-auto justify-center"
             >
-              <span className="material-symbols-outlined text-[20px]">rebase_edit</span>
+              <span className="material-symbols-outlined text-[20px]">favorite_border</span>
               Pedir Oración
             </Link>
             <Link

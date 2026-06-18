@@ -16,7 +16,7 @@ const Header = () => {
   const links = [
     { href: "/", label: "Inicio", icon: "home" },
     { href: "/oraciones", label: "Oraciones", icon: "menu_book" },
-    { href: "/muro", label: "Muro", icon: "rebase_edit" },
+    { href: "/muro", label: "Muro", icon: "forum" },
     { href: "/nueva-peticion", label: "Pedir", icon: "add_circle" },
     { href: "/comunidad", label: "Comunidad", icon: "group" },
     { href: "/apoyo", label: "Apoyo", icon: "volunteer_activism" },

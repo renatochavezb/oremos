@@ -358,7 +358,7 @@ export default function Muro() {
                       }`}
                     >
                       <span className="material-symbols-outlined text-sm">
-                        {prayer.hasUserPrayed ? "favorite" : "rebase_edit"}
+                        {prayer.hasUserPrayed ? "favorite" : "favorite_border"}
                       </span>
                       {prayer.hasUserPrayed ? "Amén" : "Orar por esto"}
                     </button>
