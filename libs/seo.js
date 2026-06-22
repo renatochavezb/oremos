@@ -69,8 +69,8 @@ export const getSEOTags = ({
       images: [
         {
           url: "/opengraph-image.png",
-          width: 1200,
-          height: 630,
+          width: 1024,
+          height: 537,
         },
       ],
       locale: "es_MX",
