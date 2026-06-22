@@ -3,6 +3,7 @@ import { auth } from "@/libs/auth";
 import connectMongo from "@/libs/mongoose";
 import { getDbErrorMessage } from "@/libs/dbError";
 import CommunityPrayer from "@/models/CommunityPrayer";
+import config from "@/config";
 
 function slugify(text) {
   return text
@@ -65,7 +66,7 @@ export async function POST(req) {
 
     if (session?.user) {
       userId = session.user.id;
-      displayName = session.user.name || "Usuario de Oremos";
+      displayName = session.user.name || `Usuario de ${config.appName}`;
     } else if (userName && userName.trim() !== "") {
       displayName = userName.trim();
     }

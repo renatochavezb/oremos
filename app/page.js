@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import config from "@/config";
 import { createRipple } from "@/libs/ripple";
 
 // Testing hot reloading stability - clean run
@@ -44,7 +45,7 @@ export default function Page() {
       {/* Top Banner */}
       <div className="bg-primary/5 py-3 px-6 text-center border-b border-primary/10">
         <p className="text-xs text-primary/80 font-sans">
-          Si Oremos te ha ayudado,{" "}
+          Si {config.appName} te ha ayudado,{" "}
           <Link href="/apoyo" className="font-bold underline underline-offset-2 hover:text-primary">
             considera apoyar la plataforma
           </Link>

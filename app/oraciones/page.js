@@ -3,12 +3,13 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { oraciones } from "@/libs/oraciones";
 import { getSEOTags } from "@/libs/seo";
+import config from "@/config";
 import connectMongo from "@/libs/mongoose";
 import CommunityPrayer from "@/models/CommunityPrayer";
 import StaticPrayerCount from "@/models/StaticPrayerCount";
 
 export const metadata = getSEOTags({
-  title: "Oraciones | Reza con la Comunidad | Oremos",
+  title: `Oraciones | Reza con la Comunidad | ${config.appName}`,
   description:
     "Encuentra oraciones para cada momento y necesidad. Oración de la noche, por los enfermos, por la familia y más.",
   keywords: [
@@ -19,7 +20,7 @@ export const metadata = getSEOTags({
   ],
   canonicalUrlRelative: "/oraciones",
   openGraph: {
-    title: "Oraciones | Reza con la Comunidad | Oremos",
+    title: `Oraciones | Reza con la Comunidad | ${config.appName}`,
     description:
       "Encuentra oraciones para cada momento y necesidad. Reza solo o pide a la comunidad que rece contigo.",
     locale: "es_MX",

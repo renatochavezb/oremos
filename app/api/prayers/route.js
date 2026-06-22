@@ -6,6 +6,7 @@ import { mapPrayerCandleFields } from "@/libs/candles";
 import { getGroupIfMember } from "@/libs/privateGroups";
 import PrayerRequest from "@/models/PrayerRequest";
 import User from "@/models/User";
+import config from "@/config";
 
 // GET /api/prayers - List public prayer requests with active candles prioritized
 export async function GET(req) {
@@ -86,7 +87,7 @@ export async function POST(req) {
     if (session?.user) {
       userId = session.user.id;
       if (!isAnonymous) {
-        displayName = session.user.name || "Usuario de Oremos";
+        displayName = session.user.name || `Usuario de ${config.appName}`;
       }
     }
 

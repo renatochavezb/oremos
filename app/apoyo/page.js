@@ -187,7 +187,7 @@ function SupportContent() {
             <span className="material-symbols-outlined text-primary text-4xl mb-4">favorite</span>
             <h3 className="font-display text-2xl text-primary mb-4 font-medium">Donación Voluntaria</h3>
             <p className="text-sm text-base-content/70 mb-8 leading-relaxed">
-              Si Oremos te ha ayudado, considera apoyar la plataforma. Tu contribución permite que sigamos ofreciendo un espacio de paz y calma sin publicidad invasiva.
+              Si {config.appName} te ha ayudado, considera apoyar la plataforma. Tu contribución permite que sigamos ofreciendo un espacio de paz y calma sin publicidad invasiva.
             </p>
 
             {/* Donation selection form */}

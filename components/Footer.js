@@ -18,7 +18,7 @@ const Footer = () => {
             <div className="bg-base-100 p-6 rounded-2xl inline-block border border-base-content/5 max-w-sm">
               <h4 className="font-semibold text-primary text-xs tracking-wider uppercase mb-2">Donaciones</h4>
               <p className="text-xs text-base-content/70 mb-4 leading-relaxed">
-                Si Oremos te ha ayudado, considera apoyar la plataforma para mantenerla libre de publicidad y accesible para todos.
+                Si {config.appName} te ha ayudado, considera apoyar la plataforma para mantenerla libre de publicidad y accesible para todos.
               </p>
               <ProximamenteButton variant="primary" className="px-6 py-2">
                 Donar con Amor
@@ -79,7 +79,7 @@ const Footer = () => {
           </div>
         </div>
         <div className="text-center pt-8 border-t border-base-content/5 text-xs text-base-content/50">
-          © {new Date().getFullYear()} Oremos Collective. Hecho con fe para el mundo.
+          © {new Date().getFullYear()} {config.appName}. Hecho con fe para el mundo.
         </div>
       </div>
     </footer>

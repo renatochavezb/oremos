@@ -10,7 +10,7 @@ export default function OracionActions({ titulo, texto, slug, id, isCommunity, i
   
   // WhatsApp Share Message that contains the written prayer text (texto) and a link to hear/read the prayer
   const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(
-    `Escucha y reza esta hermosa oración en Oremos:\n\n*${titulo}*\n\n"${texto}"\n\nEscucha el audio y únete en oración aquí:\n${shareUrl}`
+    `Escucha y reza esta hermosa oración en ${config.appName}:\n\n*${titulo}*\n\n"${texto}"\n\nEscucha el audio y únete en oración aquí:\n${shareUrl}`
   )}`;
 
   const [prayersCount, setPrayersCount] = useState(initialPrayersCount || 0);

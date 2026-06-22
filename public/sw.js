@@ -1,6 +1,6 @@
 self.addEventListener("push", (event) => {
   let payload = {
-    title: "Oremos",
+    title: "oremosya",
     body: "Tienes una nueva actualización en tu petición.",
     url: "/muro",
     tag: "oremos-push",

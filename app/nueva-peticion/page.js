@@ -10,6 +10,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { createRipple } from "@/libs/ripple";
 import PrayerPrivacyBadge from "@/components/PrayerPrivacyBadge";
+import config from "@/config";
 import { ProximamenteBadge } from "@/components/Proximamente";
 
 const categories = ["Salud", "Paz", "Gratitud", "Familia", "Otros"];
@@ -331,7 +332,7 @@ function NewPrayerRequestContent() {
                       />
                       <div className="flex flex-col">
                         <span className="text-sm font-bold text-base-content font-sans">Muro de Oración Público</span>
-                        <span className="text-xs text-base-content/60 mt-0.5 font-sans">Comparte con toda la comunidad de Oremos</span>
+                        <span className="text-xs text-base-content/60 mt-0.5 font-sans">Comparte con toda la comunidad de {config.appName}</span>
                       </div>
                       <span className="material-symbols-outlined ml-auto text-primary opacity-60 group-hover:opacity-100 transition-opacity">
                         public

@@ -1,6 +1,6 @@
 const config = {
   // REQUIRED
-  appName: "Oremos",
+  appName: "oremosya",
   // REQUIRED: a short description of your app for SEO tags (can be overwritten)
   appDescription:
     "Conecta tu petición con personas dispuestas a orar por ti. Únete a una comunidad global dedicada a la intercesión y el apoyo mutuo.",
@@ -62,9 +62,9 @@ const config = {
   },
   resend: {
     // REQUIRED — Email 'From' field to be used when sending magic login links
-    fromNoReply: `Oremos <noreply@resend.oremos.net>`,
+    fromNoReply: `oremosya <noreply@resend.oremos.net>`,
     // REQUIRED — Email 'From' field to be used when sending other emails, like abandoned carts, updates etc..
-    fromAdmin: `Oremos Team <team@resend.oremos.net>`,
+    fromAdmin: `oremosya team <team@resend.oremos.net>`,
     // Email shown to customer if need support. Leave empty if not needed => if empty, set up Crisp above, otherwise you won't be able to offer customer support."
     supportEmail: "support@oremos.net",
   },
@@ -78,8 +78,9 @@ const config = {
   brand: {
     icon: "/brand/oremos-favicon.png",
     iconMark: "/brand/oremos-icon-mark.png",
-    wordmark: "/brand/oremos-wordmark.png",
-    logo: "/logoAndName.png",
+    wordmark: "/brand/oremosya-wordmark.svg",
+    logo: "/brand/oremosya-wordmark.svg",
+    wordmarkGold: "#C4A35A",
   },
   auth: {
     // REQUIRED — the path to log in users. It's use to protect private routes (like /dashboard). It's used in apiClient (/libs/api.js) upon 401 errors from our API

@@ -15,7 +15,7 @@ export const getSEOTags = ({
 } = {}) => {
   return {
     // up to 50 characters (what does your app do for the user?) > your main should be here
-    title: title || "Oremos — Comunidad de Oración en Español",
+    title: title || `${config.appName} — Comunidad de Oración en Español`,
     // up to 160 characters (how does your app help the user?)
     description:
       description ||
@@ -49,12 +49,12 @@ export const getSEOTags = ({
     },
 
     openGraph: {
-      title: openGraph?.title || "Oremos — Comunidad de Oración en Español",
+      title: openGraph?.title || `${config.appName} — Comunidad de Oración en Español`,
       description:
         openGraph?.description ||
         "Pide oración, miles rezan por ti. Comunidad de oración católica en México y LatAm.",
       url: openGraph?.url || `https://${config.domainName}/`,
-      siteName: "Oremos",
+      siteName: config.appName,
       images: [
         {
           url: "/opengraph-image.png",
@@ -67,7 +67,7 @@ export const getSEOTags = ({
     },
 
     twitter: {
-      title: openGraph?.title || "Oremos — Comunidad de Oración en Español",
+      title: openGraph?.title || `${config.appName} — Comunidad de Oración en Español`,
       description:
         openGraph?.description ||
         "Pide oración, miles rezan por ti. Comunidad de oración católica en México y LatAm.",

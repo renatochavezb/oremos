@@ -5,6 +5,7 @@ import Footer from "@/components/Footer";
 import OracionActions from "@/components/OracionActions";
 import { getOracionBySlug, getAllSlugs, oraciones } from "@/libs/oraciones";
 import { getSEOTags } from "@/libs/seo";
+import config from "@/config";
 import connectMongo from "@/libs/mongoose";
 import CommunityPrayer from "@/models/CommunityPrayer";
 import StaticPrayerCount from "@/models/StaticPrayerCount";
@@ -38,7 +39,7 @@ async function getOracion(slug) {
         slug: dbOracion.slug,
         titulo: dbOracion.title,
         keyword: "oración de la comunidad",
-        descripcionSeo: `Oración escrita por la comunidad: ${dbOracion.title}. Reza con nosotros en Oremos.`,
+        descripcionSeo: `Oración escrita por la comunidad: ${dbOracion.title}. Reza con nosotros en ${config.appName}.`,
         texto: dbOracion.text,
         categoria: dbOracion.category,
         userName: dbOracion.userName,
@@ -65,12 +66,12 @@ export async function generateMetadata({ params }) {
   if (!oracion) return {};
 
   return getSEOTags({
-    title: `${oracion.titulo || oracion.title} | Oremos`,
+    title: `${oracion.titulo || oracion.title} | ${config.appName}`,
     description: oracion.descripcionSeo,
     keywords: [oracion.keyword || "oración", "oración de la comunidad", "oraciones en español"],
     canonicalUrlRelative: `/oraciones/${oracion.slug}`,
     openGraph: {
-      title: `${oracion.titulo || oracion.title} | Oremos`,
+      title: `${oracion.titulo || oracion.title} | ${config.appName}`,
       description: oracion.descripcionSeo,
       locale: "es_MX",
       type: "article",
@@ -145,7 +146,7 @@ export default async function OracionPage({ params }) {
 
         <div className="bg-primary/5 border border-primary/15 rounded-2xl p-6 md:p-8 mb-10 text-center">
           <p className="text-base-content/50 text-xs uppercase tracking-wider font-bold mb-1">
-            Hoy en Oremos
+            Hoy en {config.appName}
           </p>
           <p className="font-display text-3xl text-primary font-medium mb-4">
             {oracion.prayersCount || 0} personas rezaron esto
