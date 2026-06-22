@@ -1,5 +1,20 @@
 import config from "@/config";
 
+export function getSiteUrl() {
+  const base =
+    process.env.NODE_ENV === "development"
+      ? process.env.NEXTAUTH_URL || "http://localhost:3001"
+      : `https://${config.domainName}`;
+
+  return base.replace(/\/$/, "");
+}
+
+function toAbsoluteUrl(path) {
+  if (!path) return getSiteUrl();
+  if (path.startsWith("http://") || path.startsWith("https://")) return path;
+  return `${getSiteUrl()}${path.startsWith("/") ? path : `/${path}`}`;
+}
+
 // These are all the SEO tags you can add to your pages.
 // It prefills data with default title/description/OG, etc.. and you can cusotmize it for each page.
 // It's already added in the root layout.js so you don't have to add it to every pages
@@ -30,11 +45,7 @@ export const getSEOTags = ({
     ],
     applicationName: config.appName,
     // set a base URL prefix for other fields that require a fully qualified URL (.e.g og:image: og:image: 'https://yourdomain.com/share.png' => '/share.png')
-    metadataBase: new URL(
-      process.env.NODE_ENV === "development"
-        ? "http://localhost:3001/"
-        : `https://${config.domainName}/`
-    ),
+    metadataBase: new URL(`${getSiteUrl()}/`),
 
     // Static favicon and icons
     icons: {
@@ -53,7 +64,7 @@ export const getSEOTags = ({
       description:
         openGraph?.description ||
         "Pide oración, miles rezan por ti. Comunidad de oración católica en México y LatAm.",
-      url: openGraph?.url || `https://${config.domainName}/`,
+      url: openGraph?.url ? toAbsoluteUrl(openGraph.url) : `${getSiteUrl()}/`,
       siteName: config.appName,
       images: [
         {
@@ -75,9 +86,9 @@ export const getSEOTags = ({
       card: "summary_large_image",
     },
 
-    // If a canonical URL is given, we add it. The metadataBase will turn the relative URL into a fully qualified URL
+    // Absolute canonical avoids www/non-www mismatches from metadataBase alone
     ...(canonicalUrlRelative && {
-      alternates: { canonical: canonicalUrlRelative },
+      alternates: { canonical: toAbsoluteUrl(canonicalUrlRelative) },
     }),
 
     // If you want to add extra tags, you can pass them here
@@ -102,8 +113,8 @@ export const renderSchemaTags = () => {
           "@type": "SoftwareApplication",
           name: config.appName,
           description: config.appDescription,
-          image: `https://${config.domainName}/brand/oremos-favicon.png`,
-          url: `https://${config.domainName}/`,
+          image: `${getSiteUrl()}/brand/oremos-favicon.png`,
+          url: `${getSiteUrl()}/`,
           author: {
             "@type": "Person",
             name: "Marc Lou",
@@ -127,3 +138,80 @@ export const renderSchemaTags = () => {
     ></script>
   );
 };
+
+export function getOracionSchema(oracion) {
+  const pageUrl = `${getSiteUrl()}/oraciones/${oracion.slug}`;
+  const titulo = oracion.titulo || oracion.title;
+  const description = oracion.descripcionSeo || "";
+  const texto = oracion.texto || oracion.text || "";
+
+  const author =
+    oracion.isCommunity && oracion.userName
+      ? { "@type": "Person", name: oracion.userName }
+      : { "@type": "Organization", name: config.appName, url: getSiteUrl() };
+
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "@id": `${pageUrl}#article`,
+        mainEntityOfPage: {
+          "@type": "WebPage",
+          "@id": pageUrl,
+        },
+        headline: titulo,
+        name: titulo,
+        description,
+        articleBody: texto,
+        inLanguage: "es-MX",
+        url: pageUrl,
+        image: `${getSiteUrl()}/opengraph-image.png`,
+        author,
+        publisher: {
+          "@type": "Organization",
+          name: config.appName,
+          url: getSiteUrl(),
+          logo: {
+            "@type": "ImageObject",
+            url: `${getSiteUrl()}/brand/oremos-favicon.png`,
+          },
+        },
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Inicio",
+            item: getSiteUrl(),
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Oraciones",
+            item: `${getSiteUrl()}/oraciones`,
+          },
+          {
+            "@type": "ListItem",
+            position: 3,
+            name: titulo,
+            item: pageUrl,
+          },
+        ],
+      },
+    ],
+  };
+}
+
+export function renderOracionSchema(oracion) {
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{
+        __html: JSON.stringify(getOracionSchema(oracion)),
+      }}
+    />
+  );
+}

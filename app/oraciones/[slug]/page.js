@@ -4,7 +4,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import OracionActions from "@/components/OracionActions";
 import { getOracionBySlug, getAllSlugs, oraciones } from "@/libs/oraciones";
-import { getSEOTags } from "@/libs/seo";
+import { getSEOTags, renderOracionSchema } from "@/libs/seo";
 import config from "@/config";
 import connectMongo from "@/libs/mongoose";
 import CommunityPrayer from "@/models/CommunityPrayer";
@@ -73,6 +73,7 @@ export async function generateMetadata({ params }) {
     openGraph: {
       title: `${oracion.titulo || oracion.title} | ${config.appName}`,
       description: oracion.descripcionSeo,
+      url: `/oraciones/${oracion.slug}`,
       locale: "es_MX",
       type: "article",
     },
@@ -105,6 +106,7 @@ export default async function OracionPage({ params }) {
 
   return (
     <>
+      {renderOracionSchema(oracion)}
       <Header />
       <main className="max-w-3xl mx-auto px-6 md:px-12 py-12 md:py-20 font-sans min-h-screen">
         {/* Main Prayer Card (Mockup style using brand colors - Glassmorphic) */}

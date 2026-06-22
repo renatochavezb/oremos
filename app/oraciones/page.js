@@ -23,6 +23,7 @@ export const metadata = getSEOTags({
     title: `Oraciones | Reza con la Comunidad | ${config.appName}`,
     description:
       "Encuentra oraciones para cada momento y necesidad. Reza solo o pide a la comunidad que rece contigo.",
+    url: "/oraciones",
     locale: "es_MX",
     type: "website",
   },
