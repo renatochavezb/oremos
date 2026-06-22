@@ -68,13 +68,15 @@ export const getSEOTags = ({
       siteName: config.appName,
       images: [
         {
-          url: "/opengraph-image.png",
+          url: toAbsoluteUrl("/opengraph-image.png"),
           width: 1024,
           height: 537,
+          type: "image/png",
+          alt: `${config.appName} — Comunidad de Oración en Español`,
         },
       ],
-      locale: "es_MX",
-      type: "website",
+      locale: openGraph?.locale || "es_MX",
+      type: openGraph?.type || "website",
     },
 
     twitter: {
@@ -82,7 +84,7 @@ export const getSEOTags = ({
       description:
         openGraph?.description ||
         "Pide oración, miles rezan por ti. Comunidad de oración católica en México y LatAm.",
-      images: ["/twitter-image.png"],
+      images: [toAbsoluteUrl("/twitter-image.png")],
       card: "summary_large_image",
     },
 

@@ -1,5 +1,5 @@
 module.exports = {
-  siteUrl: process.env.SITE_URL || "https://oremos-chi.vercel.app",
+  siteUrl: process.env.SITE_URL || "https://www.oremosya.com",
   generateRobotsTxt: true,
   exclude: [
     "/twitter-image.*",
