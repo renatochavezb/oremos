@@ -202,7 +202,7 @@ export default function Page() {
                   </button>
                 </div>
                 <blockquote className="font-display text-xl md:text-3xl text-primary leading-relaxed mb-8 italic">
-                  &ldquo;Después de meses de incertidumbre, la comunidad de Oremos se unió en oración por mi madre. Ayer recibimos los resultados: todo está bien. La paz que sentí sabiendo que no estaba sola fue el milagro inicial.&rdquo;
+                  &ldquo;Subí una petición por mi mamá un domingo en la noche. Para la mañana ya tenía personas orando por ella. Saber que no estaba sola me cambió la semana.&rdquo; — Elena R.
                 </blockquote>
               </div>
               <div className="flex items-center gap-4 relative z-10">
@@ -213,7 +213,7 @@ export default function Page() {
                   src="https://lh3.googleusercontent.com/aida-public/AB6AXuCp13i_Cxl-RSPp5XxSDER8a-dE3ZGN9BtEfF752d2vSYJnV1dbPR-gtF-ZMQPExHm3_QzRG7QVCYXF2Gm39sDO0RfVmn6uK1fG4hZmqhYgW5YzhHIdgQj5dZiIL7eQ1u0Rn5wNJ7kRPsxJz4VtgClZxDXOcGWcPPDLWtgsQd1xJGRDMHjWGnQuEyAkwJu8kUXbLsASD-ojYb0hCJ0ZpdUFW7QQGE-Roxle8FAqhjxAnVQpq3mKdyRbdaf56sCA8oC-NbUSerIctdI"
                 />
                 <div>
-                  <p className="font-sans text-sm font-bold text-base-content">Elena Rodríguez</p>
+                  <p className="font-sans text-sm font-bold text-base-content">Elena R.</p>
                   <p className="font-sans text-xs text-base-content/60">Hace 2 días</p>
                 </div>
               </div>
@@ -230,18 +230,18 @@ export default function Page() {
                   </span>
                 </div>
                 <p className="font-sans text-sm md:text-base text-base-content/80 leading-relaxed mb-8">
-                  &ldquo;Encontré consuelo cuando más lo necesitaba. Oremos es más que una app, es una familia espiritual.&rdquo;
+                  &ldquo;Busqué la oración a San Miguel Arcángel porque no me la sabía. La puse en audio y ya me la aprendí.&rdquo; — Carla M.
                 </p>
               </div>
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
-                    alt="Mateo S."
+                    alt="Carla M."
                     className="w-8 h-8 rounded-full object-cover"
                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuAVQvvTQU1B7uaGOPON1z-1kpKS0LS5WQ1BepCPg5QFHsD_eqGOjPoHZsYMZHTv9NYi26guzcATbO6rJOsoUciBlGWcuC4GjV_P2R4PqiCHN_InkIO2t6Q6XP5LImx8eXOoWNbsV8_KDctC_UGJb4CWRuh9BIiQ20Mn5JjXOCtrBq9PkXqtX-AQ455a1hmnA-rtzJNMBP0JpnsWd7yG9GmAlynlUkY_UbT-GEtIMEXYaRlfHpphnMuXQYvmtRmd8kQDcqmYsp3S9cY"
                   />
-                  <span className="font-sans text-xs font-bold text-primary">Mateo Santos</span>
+                  <span className="font-sans text-xs font-bold text-primary">Carla M.</span>
                 </div>
                 <button
                   onClick={(e) => {
@@ -266,18 +266,18 @@ export default function Page() {
                   </span>
                 </div>
                 <p className="font-sans text-sm md:text-base text-base-content/80 leading-relaxed mb-8">
-                  &ldquo;Publiqué mi petición de trabajo y en menos de una hora ya tenía 50 personas diciendo &apos;Amén&apos;. Conseguí el empleo esa misma semana.&rdquo;
+                  &ldquo;Encontré una oración perfecta para un momento difícil de mi hermana y se la compartí por WhatsApp. Me dijo que la rezó esa misma noche.&rdquo; — Ana L.
                 </p>
               </div>
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
-                    alt="Lucía V."
+                    alt="Ana L."
                     className="w-8 h-8 rounded-full object-cover"
                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuDCwE-QfhykUWvDFfQEj_aC_KFVa8-7W5umLUsVyCwCYoPWecSyGWOE4ZEAX5GeO-QWl0CdsuL-FBC-j3O290OLNcB0grYLIjGS4FN0D_BLfOzhhLSGSO4Ve9JkyzybQkUCaL6XNRnrPgdgS83Hwh5FjMR3Js-a1mbvmCN_eN0Nrc9gskv_G1Sh8ED1eHQ6RxDcFsK6Jv2mF43fTRwrR3g35Dx5aOAV1wtqZIzEVaCGlbL4JCuvKvJkXntNJoarQpaoV9Fa2X7umU4"
                   />
-                  <span className="font-sans text-xs font-bold text-primary">Lucía Varela</span>
+                  <span className="font-sans text-xs font-bold text-primary">Ana L.</span>
                 </div>
                 <button
                   onClick={(e) => {
