@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import { auth } from "@/libs/auth";
 import connectMongo from "@/libs/mongoose";
 import StaticPrayerCount from "@/models/StaticPrayerCount";
@@ -44,6 +45,9 @@ export async function POST(req, { params }) {
         await user.save();
       }
     }
+
+    revalidatePath("/oraciones");
+    revalidatePath(`/oraciones/${slug}`);
 
     return NextResponse.json({
       success: true,

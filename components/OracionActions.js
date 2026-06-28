@@ -1,11 +1,13 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import config from "@/config";
 import axios from "axios";
 
 export default function OracionActions({ titulo, texto, slug, id, isCommunity, initialPrayersCount, showDelete }) {
+  const router = useRouter();
   const shareUrl = `https://${config.domainName}/oraciones/${slug}`;
   
   // WhatsApp Share Message that contains the written prayer text (texto) and a link to hear/read the prayer
@@ -42,6 +44,7 @@ export default function OracionActions({ titulo, texto, slug, id, isCommunity, i
         setPrayersCount(res.data.prayersCount);
       }
       setHasPrayed(true);
+      router.refresh();
       toast.success("Amén. Te has unido en oración.");
     } catch (err) {
       console.error(err);

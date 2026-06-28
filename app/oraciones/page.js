@@ -29,6 +29,8 @@ export const metadata = getSEOTags({
   },
 });
 
+export const dynamic = "force-dynamic";
+
 export default async function OracionesHub() {
   let communityPrayers = [];
   let staticCounts = [];

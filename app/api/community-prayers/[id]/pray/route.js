@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import { auth } from "@/libs/auth";
 import connectMongo from "@/libs/mongoose";
 import CommunityPrayer from "@/models/CommunityPrayer";
@@ -46,6 +47,9 @@ export async function POST(req, { params }) {
 
     prayer.prayersCount = (prayer.prayersCount || 0) + 1;
     await prayer.save();
+
+    revalidatePath("/oraciones");
+    revalidatePath(`/oraciones/${prayer.slug}`);
 
     return NextResponse.json({
       success: true,
